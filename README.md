@@ -42,7 +42,7 @@ pip install -r requirements.txt
 
 ## Tutorial
 
-See the [tutorial.py](https://github.com/shlizee/TimeAwarePC/blob/main/tutorial.py) for a quick tutorial of the main functionalities of this library and check if it is installed properly. 
+See the [tutorial.py](https://github.com/shlizee/TimeAwarePC/blob/main/timeawarepc/tutorial.py) for a quick tutorial of the main functionalities of this library and check if it is installed properly. 
 <!-- 
 ## Documentation
 
