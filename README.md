@@ -30,10 +30,10 @@ pip install git+https://github.com/shlizee/TimeAwarePC.git
 ## Tutorial
 
 See the [tutorial.py](https://github.com/shlizee/TimeAwarePC/blob/main/tutorial.py) for a quick tutorial of the main functionalities of this library. 
-
+<!-- 
 ## Documentation
 
-[Documentation is available at readthedocs.org](https://timeaware-pc.readthedocs.io/en/latest/)
+[Documentation is available at readthedocs.org](https://timeaware-pc.readthedocs.io/en/latest/) -->
 
 ## Contributing
 
