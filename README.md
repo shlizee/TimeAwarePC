@@ -29,7 +29,7 @@ pip install .
 
 ## Tutorial
 
-See the [tutorial.py](todo) to get a quick tutorial of the main functionalities of this library. 
+See the [tutorial.py](todo) for a quick tutorial of the main functionalities of this library. 
 
 ## Documentation
 
