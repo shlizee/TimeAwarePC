@@ -9,6 +9,7 @@ Python library for finding the causal functional connectivity from time series d
 
 - [Overview](#overview)
 - [Installation](#installation)
+- [Requirements](#requirements)
 - [Tutorial](#tutorial)
 - [Documentation](#documentation)
 - [Contributing](#contributing)
@@ -21,19 +22,31 @@ This library implements the Time Aware PC algorithm to find the causal functiona
 
 ## Installation
 
-You can get the latest version of Time-Aware PC as follows:
+You can get the latest version of Time-Aware PC by cloning the repository:
 
 ```
-pip install git+https://github.com/shlizee/TimeAwarePC.git
+git clone -b main https://github.com/shlizee/TimeAwarePC.git
+cd timeawarepc
+pip install .
 ```
+
+## Requirements
+- Python >3.6
+- Python packages in requirements.txt. You can install as follows:
+
+```
+pip install -r requirements.txt
+```
+
+
 
 ## Tutorial
 
-See the [tutorial.py](https://github.com/shlizee/TimeAwarePC/blob/main/tutorial.py) for a quick tutorial of the main functionalities of this library. 
-
+See the [tutorial.py](https://github.com/shlizee/TimeAwarePC/blob/main/tutorial.py) for a quick tutorial of the main functionalities of this library and check if it is installed properly. 
+<!-- 
 ## Documentation
 
-[Documentation is available at readthedocs.org](https://timeaware-pc.readthedocs.io/en/latest/)
+[Documentation is available at readthedocs.org](https://timeaware-pc.readthedocs.io/en/latest/) -->
 
 ## Contributing
 
