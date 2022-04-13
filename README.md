@@ -16,15 +16,14 @@ Python library for finding the causal functional connectivity from time series d
 
 ## Overview
 
-This library implements the Time Aware PC algorithm to find the causal functional connectivity from time series data, which is based on recent developments in directed probabilistic graphical modeling of causal interactions in neural time series. The library also includes classical approaches such as, Granger Causality and the PC algorithm.
+This library implements the Time Aware PC algorithm to find the causal functional connectivity from time series data, which is based on recent developments in directed probabilistic graphical modeling of causal interactions in neural time series.
 
 ## Installation
 
 You can get the latest version of causal-timeaware by cloning the repository::
 
 ```
-git clone -b main https://github.com/bkrahul1/causal-timeaware.git
-cd timeaware-pc
+git clone -b main https://github.com/shlizee/TimeAwarePC.git
 pip install .
 ```
 
