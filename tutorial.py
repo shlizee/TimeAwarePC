@@ -13,7 +13,8 @@ from find_cfc import *
 #%%
 # Simulate a dataset. 
 # Specify a data generating model: model = "lingauss" for Linear Gaussian VAR, "nonlinnongauss" for Non-Linear Non-Gaussian VAR, "ctrnn" for Continuous Time Recurrent Neural Network.
-# T is the number of time recordings (default 1000), noise is the noise std. deviation (default 1). Note that number of neurons and max delay of interaction are fixed to be 4 and 1 indices respectively in this tutorial.
+# T is the number of time recordings (default 1000), noise is the noise std. deviation (default 1). 
+# Note that number of neurons = 4 and max delay of interaction = 1 indices are fixed in this tutorial.
 model = 'lingauss'
 T=1000
 noise = 1
