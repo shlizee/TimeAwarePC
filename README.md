@@ -16,8 +16,6 @@ Python library for finding the causal functional connectivity from time series d
 
 ## Overview
 
-(**Version alpha 1.0 released in February 2022!**)
-
 This library implements the Time Aware PC algorithm to find the causal functional connectivity from time series data, which is based on recent developments in directed probabilistic graphical modeling of causal interactions in neural time series. The library also includes classical approaches such as, Granger Causality and the PC algorithm.
 
 ## Installation
@@ -41,7 +39,7 @@ Your help is absolutely welcome! Please do reach out or create a feature branch!
 
 ## Citation
 
-Biswas, R., & Shlizerman, E. (2022). Statistical Perspective on Functional and Causal Neural Connectomics: The Time-Aware PC Algorithm. (preprint soon to be uploaded)
+Biswas, R., & Shlizerman, E. (2022). Statistical Perspective on Functional and Causal Neural Connectomics: The Time-Aware PC Algorithm. https://arxiv.org/abs/2204.04845v2
 
 Biswas, R., & Shlizerman, E. (2021). Statistical Perspective on Functional and Causal Neural Connectomics: A Comparative Study. Frontiers in Systems Neuroscience. https://doi.org/10.3389/fnsys.2022.817962
 
