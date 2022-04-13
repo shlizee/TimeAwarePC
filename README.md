@@ -11,7 +11,7 @@ Python library for finding the causal functional connectivity from time series d
 - [Installation](#installation)
 - [Requirements](#requirements)
 - [Tutorial](#tutorial)
-- [Documentation](#documentation)
+<!-- - [Documentation](#documentation) -->
 - [Contributing](#contributing)
 - [Citation](#citation)
 - [References](#references)
