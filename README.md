@@ -20,7 +20,7 @@ This library implements the Time Aware PC algorithm to find the causal functiona
 
 ## Installation
 
-You can get the latest version of causal-timeaware by cloning the repository::
+You can get the latest version of Time-Aware PC using:
 
 ```
 pip install git+https://github.com/shlizee/TimeAwarePC.git
