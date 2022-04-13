@@ -27,9 +27,19 @@ You can get the latest version of Time-Aware PC as follows:
 pip install git+https://github.com/shlizee/TimeAwarePC.git
 ```
 
+# Requirements
+- Python >3.6
+- Python packages in requirements.txt. You can install as follows:
+
+```
+pip install -r requirements.txt
+```
+
+
+
 ## Tutorial
 
-See the [tutorial.py](https://github.com/shlizee/TimeAwarePC/blob/main/tutorial.py) for a quick tutorial of the main functionalities of this library. 
+See the [tutorial.py](https://github.com/shlizee/TimeAwarePC/blob/main/tutorial.py) for a quick tutorial of the main functionalities of this library and check if it is installed properly. 
 <!-- 
 ## Documentation
 
