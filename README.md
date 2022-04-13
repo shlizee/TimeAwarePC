@@ -61,8 +61,6 @@ Biswas, R., & Shlizerman, E. (2021). Statistical Perspective on Functional and C
 
 ## References
 
-Biswas, R., & Shlizerman, E. (2020). Neuro-PC: Causal Functional Connectivity from Neural Dynamics. https://arxiv.org/abs/2011.03913
-
 R Clay Reid. (2012) From functional architecture to functional connectomics. Neuron, 75(2):209–217.
 
 Smith, S. M., Miller, K. L., Salimi-Khorshidi, G., Webster, M., Beckmann, C. F., Nichols, T. E., ... & Woolrich, M. W. (2011). Network modelling methods for FMRI. Neuroimage, 54(2), 875-891.
