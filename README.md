@@ -20,7 +20,7 @@ This library implements the Time Aware PC algorithm to find the causal functiona
 
 ## Installation
 
-You can get the latest version of Time-Aware PC using:
+You can get the latest version of Time-Aware PC as follows:
 
 ```
 pip install git+https://github.com/shlizee/TimeAwarePC.git
@@ -39,8 +39,6 @@ See the [tutorial.py](todo) for a quick tutorial of the main functionalities of 
 Your help is absolutely welcome! Please do reach out or create a feature branch!
 
 ## Citation
-
-Please cite the following papers if you use this library.
 
 Biswas, R., & Shlizerman, E. (2022). Statistical Perspective on Functional and Causal Neural Connectomics: The Time-Aware PC Algorithm. https://arxiv.org/abs/2204.04845
 
