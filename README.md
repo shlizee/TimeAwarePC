@@ -11,7 +11,7 @@ Python library for finding the causal functional connectivity from time series d
 - [Installation](#installation)
 - [Requirements](#requirements)
 - [Tutorial](#tutorial)
-- [Documentation](#documentation)
+<!-- - [Documentation](#documentation) -->
 - [Contributing](#contributing)
 - [Citation](#citation)
 - [References](#references)
@@ -26,16 +26,24 @@ You can get the latest version of Time-Aware PC by cloning the repository:
 
 ```
 git clone -b main https://github.com/shlizee/TimeAwarePC.git
-cd timeawarepc
+cd TimeAwarePC
 pip install .
 ```
 
 ## Requirements
-- Python >3.6
-- Python packages in requirements.txt. You can install as follows:
-
+- Python >=3.7
+- You can install required Python packages in requirements_py.txt as follows:
 ```
 pip install -r requirements.txt
+```
+- R >=4.0
+- You can install required R packages as follows:
+```
+install.packages("BiocManager")
+BiocManager::install("graph")
+BiocManager::install("RBGL")
+install.packages("pcalg")
+install.packages("kpcalg")
 ```
 
 
