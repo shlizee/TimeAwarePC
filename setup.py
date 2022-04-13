@@ -13,7 +13,7 @@ setuptools.setup(
     description = 'Time-Aware PC Python Package',
     long_description= README,
     long_description_content_type = 'text/markdown',
-    install_requires=['numpy','pickle','pandas','rpy2','networkx','scipy'],
+    install_requires=['numpy','pandas','rpy2','networkx','scipy'],
     url='https://github.com/shlizee/TimeAwarePC',
     packages=setuptools.find_packages(),
     python_requires='>=3.6',
