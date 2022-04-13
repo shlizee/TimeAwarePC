@@ -26,7 +26,7 @@ You can get the latest version of Time-Aware PC by cloning the repository:
 
 ```
 git clone -b main https://github.com/shlizee/TimeAwarePC.git
-cd timeaware-pc
+cd timeawarepc
 pip install .
 ```
 
