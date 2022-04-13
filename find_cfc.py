@@ -14,15 +14,15 @@ def find_cfc(data,method_name,alpha=0.05,maxdelay=1,niter=50,thresh=0.25,isgauss
             'GC': Granger Causality
         alpha: (float) Significance level
 
-    Required args if method_name is 'PC':
+    (Required args if method_name is 'PC':)
         isgauss: (boolean) Arg for TPC and PC, not GC.
             True: Assume Gaussian Noise distribution, 
             False: Distribution free.
 
-    Required args if method_name is 'GC':
+    (Required args if method_name is 'GC':)
         maxdelay: (int) Maximum time-delay of interactions.
     
-    Required args if method_name is 'TPC':
+    (Required args if method_name is 'TPC':)
         maxdelay: (int) Maximum time-delay of interactions. Arg for TPC and GC, not PC.
         isgauss: (boolean) Arg for TPC and PC, not GC.
             True: Assume Gaussian Noise distribution, 
