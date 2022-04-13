@@ -32,7 +32,7 @@ pip install .
 
 ## Requirements
 - Python >=3.7
-- You can install required Python packages in requirements_py.txt as follows:
+- You can install required Python packages in requirements.txt as follows:
 ```
 pip install -r requirements.txt
 ```
