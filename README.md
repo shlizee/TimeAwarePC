@@ -9,6 +9,7 @@ Python library for finding the causal functional connectivity from time series d
 
 - [Overview](#overview)
 - [Installation](#installation)
+- [Tutorial](#tutorial)
 - [Documentation](#documentation)
 - [Contributing](#contributing)
 - [Citation](#citation)
@@ -28,7 +29,7 @@ pip install git+https://github.com/shlizee/TimeAwarePC.git
 
 ## Tutorial
 
-See the [tutorial.py](todo) for a quick tutorial of the main functionalities of this library. 
+See the [tutorial.py](https://github.com/shlizee/TimeAwarePC/blob/main/tutorial.py) for a quick tutorial of the main functionalities of this library. 
 
 ## Documentation
 
