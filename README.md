@@ -38,13 +38,16 @@ Your help is absolutely welcome! Please do reach out or create a feature branch!
 
 ## Citation
 
+Please cite the following papers when you use this library.
+
 Biswas, R., & Shlizerman, E. (2022). Statistical Perspective on Functional and Causal Neural Connectomics: The Time-Aware PC Algorithm. https://arxiv.org/abs/2204.04845
 
 Biswas, R., & Shlizerman, E. (2021). Statistical Perspective on Functional and Causal Neural Connectomics: A Comparative Study. Frontiers in Systems Neuroscience. https://doi.org/10.3389/fnsys.2022.817962
 
-Biswas, R., & Shlizerman, E. (2020). Neuro-PC: Causal Functional Connectivity from Neural Dynamics. https://arxiv.org/abs/2011.03913
 
 ## References
+
+Biswas, R., & Shlizerman, E. (2020). Neuro-PC: Causal Functional Connectivity from Neural Dynamics. https://arxiv.org/abs/2011.03913
 
 R Clay Reid. (2012) From functional architecture to functional connectomics. Neuron, 75(2):209–217.
 
