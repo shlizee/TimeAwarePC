@@ -33,9 +33,17 @@ pip install .
 ## Requirements
 - Python >3.6
 - Python packages in requirements.txt. You can install as follows:
-
 ```
 pip install -r requirements.txt
+```
+- R >4.0
+- R packages in requirements_R.txt. You can install as follows:
+```
+install.packages("BiocManager")
+BiocManager::install("graph")
+BiocManager::install("RBGL")
+install.packages("pcalg")
+install.packages("kpcalg")
 ```
 
 
