@@ -38,7 +38,7 @@ Your help is absolutely welcome! Please do reach out or create a feature branch!
 
 ## Citation
 
-Please cite the following papers when you use this library.
+Please cite the following papers if you use this library.
 
 Biswas, R., & Shlizerman, E. (2022). Statistical Perspective on Functional and Causal Neural Connectomics: The Time-Aware PC Algorithm. https://arxiv.org/abs/2204.04845
 
