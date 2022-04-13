@@ -1,0 +1,6 @@
+numpy
+pickle
+pandas
+scipy
+networkx
+rpy2
