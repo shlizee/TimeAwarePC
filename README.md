@@ -1,4 +1,4 @@
-# CausalFunctionalConnectivity
+# Time Aware PC
 Python library for finding the causal functional connectivity from time series data.
 
 <p align="center">
@@ -39,11 +39,11 @@ Your help is absolutely welcome! Please do reach out or create a feature branch!
 
 ## Citation
 
-Biswas, R., & Shlizerman, E. (2022). Statistical Perspective on Functional and Causal Neural Connectomics: The Time-Aware PC Algorithm. https://arxiv.org/abs/2204.04845v2
+Biswas, R., & Shlizerman, E. (2022). Statistical Perspective on Functional and Causal Neural Connectomics: The Time-Aware PC Algorithm. https://arxiv.org/abs/2204.04845
 
 Biswas, R., & Shlizerman, E. (2021). Statistical Perspective on Functional and Causal Neural Connectomics: A Comparative Study. Frontiers in Systems Neuroscience. https://doi.org/10.3389/fnsys.2022.817962
 
-Biswas, R., & Shlizerman, E. (2020). Neuro-PC: Causal Functional Connectivity from Neural Dynamics. arXiv preprint, arXiv:2011.03913.
+Biswas, R., & Shlizerman, E. (2020). Neuro-PC: Causal Functional Connectivity from Neural Dynamics. https://arxiv.org/abs/2011.03913
 
 ## References
 
