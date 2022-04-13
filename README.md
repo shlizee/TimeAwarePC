@@ -27,10 +27,13 @@ git clone -b main https://github.com/shlizee/TimeAwarePC.git
 pip install .
 ```
 
+## Tutorial
+
+Follow along the tutorial.py to get a quick tutorial of the main functionalities of this library. 
+
 ## Documentation
 
 [Documentation is available at readthedocs.org](https://timeaware-pc.readthedocs.io/en/latest/)
-
 
 ## Contributing
 
