@@ -1,19 +1,25 @@
-from setuptools import setup
-setup(
+import setuptools
+
+with open('README.md','r') as fh:
+    README = fh.read()
+
+VERSION = "0.0.1"
+
+setuptools.setup(
     # Needed to silence warnings (and to be a worthwhile package)
-    name='timeawarepc',
-    url='https://github.com/shlizee/TimeAwarePC',
-    author='Rahul Biswas (GitHub: biswasr)',
-    author_email='rbiswas1@uw.edu',
-    # Needed to actually package something
-    packages=['timeawarepc'],
-    # Needed for dependencies
+    name = 'timeawarepc',
+    version = VERSION,
+    author = 'Rahul Biswas',
+    description = 'Time-Aware PC Python Package',
+    long_description= README,
+    long_description_content_type = 'text/markdown',
     install_requires=['numpy','pickle','pandas','rpy2','networkx','scipy'],
-    # *strongly* suggested for sharing
-    version='alpha 1.0',
-    # The license can be anything you like
-    license='MIT',
-    description='An example of a python package from pre-existing code',
-    # We will also need a readme eventually (there will be a warning)
-    # long_description=open('README.txt').read(),
+    url='https://github.com/shlizee/TimeAwarePC',
+    packages=setuptools.find_packages(),
+    python_requires='>=3.6',
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: To Be Decided",
+        "Operating System :: OS Independent",
+    ],
 )
