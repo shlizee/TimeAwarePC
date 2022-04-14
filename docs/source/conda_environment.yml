@@ -1,5 +1,7 @@
 name: timeawarepc-environment
 channels:
+  - conda-forge
+  - defaults
   - r
 
 dependencies:
