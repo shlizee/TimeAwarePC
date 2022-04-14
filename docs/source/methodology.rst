@@ -25,7 +25,7 @@ PC is an algorithm for causal inference based on Directed Probabilistic Graphica
 Granger Causality
 -----------------
 
-Granger causality (GC) is a statistical methodology for determining whether one time series is useful in predicting another :cite:`granger1969investigating,basu2015network`.
+Granger causality (GC) is a statistical methodology for determining whether one time series is useful in predicting another :cite:`granger1969investigating,basu2015network,biswasshlizerman2022-1`.
 
 Comparison of Approaches
 ------------------------

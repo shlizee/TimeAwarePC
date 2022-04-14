@@ -15,8 +15,6 @@ Welcome to Time-Aware PC's documentation
    source/gettingstarted
    source/timeawarepc
    source/references
-   source/changelog
-
 
 
 Indices and tables
