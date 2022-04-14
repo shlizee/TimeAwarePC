@@ -31,7 +31,7 @@
             <img src="_static/logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.1.0
+                0.0.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -43,12 +43,19 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="intro.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">About TimeAwarePC</a></li>
 <li class="toctree-l1"><a class="reference internal" href="methodology.html">Methodology</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installguide.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Quick Start Guide</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">timeawarepc package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-timeawarepc">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-timeawarepc.find_cfc">timeawarepc.find_cfc module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-timeawarepc.tpc">timeawarepc.tpc module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-timeawarepc.tpc_helpers">timeawarepc.tpc_helpers module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-timeawarepc.pcalg">timeawarepc.pcalg module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-timeawarepc.pcalg_helpers">timeawarepc.pcalg_helpers module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-timeawarepc.gc">timeawarepc.gc module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-timeawarepc.simulate_data">timeawarepc.simulate_data module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
@@ -80,9 +87,390 @@
              
   <section id="timeawarepc-package">
 <h1>timeawarepc package<a class="headerlink" href="#timeawarepc-package" title="Permalink to this headline">¶</a></h1>
-<section id="module-timeawarepc">
-<span id="submodules"></span><h2>Submodules<a class="headerlink" href="#module-timeawarepc" title="Permalink to this headline">¶</a></h2>
-<p>Time-Aware PC Algorithm for estimating Causal Functional Connectivity from Time Series</p>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-timeawarepc.find_cfc">
+<span id="timeawarepc-find-cfc-module"></span><h2>timeawarepc.find_cfc module<a class="headerlink" href="#module-timeawarepc.find_cfc" title="Permalink to this headline">¶</a></h2>
+<p>Convenient wrapper for functions in the library.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="timeawarepc.find_cfc.find_cfc">
+<span class="sig-prename descclassname"><span class="pre">timeawarepc.find_cfc.</span></span><span class="sig-name descname"><span class="pre">find_cfc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxdelay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">niter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thresh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isgauss</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/timeawarepc/find_cfc.html#find_cfc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#timeawarepc.find_cfc.find_cfc" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Estimate Causal Functional Connectivity (CFC) between nodes from time series.</dt><dd><p>This is a wrapper for functions cfc_tpc, cfc_pc, cfc_gc in tpc.py.
+Refer to the individual functions for their details.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – (numpy.array) of shape (n,p) with n time-recordings for p nodes</p></li>
+<li><p><strong>method_name</strong> – (string)
+‘TPC’: Implements TPC Algorithm
+‘PC’: PC Algorithm
+‘GC’: Granger Causality</p></li>
+<li><p><strong>alpha</strong> – (float) Significance level</p></li>
+<li><p><strong>isgauss</strong> – (boolean) Arg used for method_name = ‘PC’, ‘TPC’.
+True: Assume Gaussian Noise distribution,
+False: Distribution free.</p></li>
+<li><p><strong>maxdelay</strong> – (int) Maximum time-delay of interactions. Arg used for method_name = ‘GC’, ‘TPC’.</p></li>
+<li><p><strong>subsampsize</strong> – (int) Bootstrap window width in TPC. Arg used for method_name = ‘TPC’.</p></li>
+<li><p><strong>niter</strong> – (int) Number of bootstrap iterations in TPC. Arg used for method_name = ‘TPC’.</p></li>
+<li><p><strong>thresh</strong> – (float) Bootstrap stability cut-off in TPC. Arg used for method_name = ‘TPC’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(numpy.array) Adcajency matrix of estimated CFC by chosen method.
+weights: (numpy.array) Connectivity Weights in the CFC</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>adjacency</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-timeawarepc.tpc">
+<span id="timeawarepc-tpc-module"></span><h2>timeawarepc.tpc module<a class="headerlink" href="#module-timeawarepc.tpc" title="Permalink to this headline">¶</a></h2>
+<p>Implements the Time-Aware PC (TPC) Algorithm for finding Causal Functional Connectivity from Time Series [BiswasShlizerman2022].</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="timeawarepc.tpc.cfc_pc">
+<span class="sig-prename descclassname"><span class="pre">timeawarepc.tpc.</span></span><span class="sig-name descname"><span class="pre">cfc_pc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isgauss</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/timeawarepc/tpc.html#cfc_pc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#timeawarepc.tpc.cfc_pc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate Causal Functional Connectivity using PC Algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – (numpy.array) of shape (n,p) with n samples for p nodes</p></li>
+<li><p><strong>alpha</strong> – (float) Significance level for conditional independence tests</p></li>
+<li><p><strong>isgauss</strong> – (boolean)
+True: Assume Gaussian Noise distribution,
+False: Distribution free.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(numpy.array) Adcajency matrix of shape (p,p) of estimated CFC by PC Algorithm.
+weights: (numpy.array) Connectivity Weight matrix of shape (p,p).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>adjacency</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="timeawarepc.tpc.cfc_tpc">
+<span class="sig-prename descclassname"><span class="pre">timeawarepc.tpc.</span></span><span class="sig-name descname"><span class="pre">cfc_tpc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxdelay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subsampsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">niter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thresh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isgauss</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/timeawarepc/tpc.html#cfc_tpc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#timeawarepc.tpc.cfc_tpc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate Causal Functional Connectivity using TPC Algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – (numpy.array) of shape (n,p) with n time-recordings for p nodes .</p></li>
+<li><p><strong>maxdelay</strong> – (int) Maximum time-delay of interactions.</p></li>
+<li><p><strong>subsampsize</strong> – (int) Bootstrap window width.</p></li>
+<li><p><strong>niter</strong> – (int) Number of bootstrap iterations.</p></li>
+<li><p><strong>alpha</strong> – (float) Significance level for conditional independence tests.</p></li>
+<li><p><strong>thresh</strong> – (float) Bootstrap stability cut-off.</p></li>
+<li><p><strong>isgauss</strong> – (boolean)
+True: Assume Gaussian Noise distribution.
+False: Distribution-free.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(numpy.array) Adcajency matrix of shape (p,p) for estimated CFC by TPC Algorithm.
+weights: (numpy.array) Connectivity Weight matrix of shape (p,p).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>adjacency</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-timeawarepc.tpc_helpers">
+<span id="timeawarepc-tpc-helpers-module"></span><h2>timeawarepc.tpc_helpers module<a class="headerlink" href="#module-timeawarepc.tpc_helpers" title="Permalink to this headline">¶</a></h2>
+<p>Helper functions for TPC Algorithm</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="timeawarepc.tpc_helpers.causaleff_ida">
+<span class="sig-prename descclassname"><span class="pre">timeawarepc.tpc_helpers.</span></span><span class="sig-name descname"><span class="pre">causaleff_ida</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/timeawarepc/tpc_helpers.html#causaleff_ida"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#timeawarepc.tpc_helpers.causaleff_ida" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate interventional causal effects in the Unrolled DAG in TPC.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>g</strong> – (networkx.DiGraph) Estimated Unrolled Causal DAG outputted by Step 4 (Orient) of TPC.</p></li>
+<li><p><strong>data</strong> – (numpy.array) with variables for Unrolled Causal DAG in columns and time-delayed samples in rows</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(numpy.array) Interventional Causal Effects among pairs of nodes in the Unrolled Causal DAG.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>causaleff</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="timeawarepc.tpc_helpers.data_transformed">
+<span class="sig-prename descclassname"><span class="pre">timeawarepc.tpc_helpers.</span></span><span class="sig-name descname"><span class="pre">data_transformed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxdelay</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/timeawarepc/tpc_helpers.html#data_transformed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#timeawarepc.tpc_helpers.data_transformed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements Step 1 (Time Delay) of TPC,
+to construct the data with time-delayed samples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – (numpy.array) of shape (n,p) with n time recordings of p nodes.</p></li>
+<li><p><strong>maxdelay</strong> – (int) Maximum time-delay of interactions</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(numpy.array) Data with columns as Unrolled DAG nodes (column index v*maxdelay+t = node (v,t)) and rows having time-delayed samples.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>data2</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="timeawarepc.tpc_helpers.orient">
+<span class="sig-prename descclassname"><span class="pre">timeawarepc.tpc_helpers.</span></span><span class="sig-name descname"><span class="pre">orient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxdelay</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/timeawarepc/tpc_helpers.html#orient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#timeawarepc.tpc_helpers.orient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements Step 4 (Orient) of TPC,
+to correct future to past edges in Estimated Unrolled DAG</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>g</strong> – (networkx.DiGraph) Unrolled Causal DAG estimate outputted by Step 3 (PC) of TPC.</p></li>
+<li><p><strong>maxdelay</strong> – (int) Maximum time-delay of interaction</p></li>
+<li><p><strong>m</strong> – (int) Number of neurons/nodes in original data</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(networkx.DiGraph) Re-Oriented Unrolled Causal DAG estimate.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>g1</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="timeawarepc.tpc_helpers.return_finaledges">
+<span class="sig-prename descclassname"><span class="pre">timeawarepc.tpc_helpers.</span></span><span class="sig-name descname"><span class="pre">return_finaledges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">causaleff</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxdelay</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/timeawarepc/tpc_helpers.html#return_finaledges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#timeawarepc.tpc_helpers.return_finaledges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements Step 5 (Rolled CFC-DPGM) of TPC, to obtain
+the Rolled CFC-DPGM and its weights from the Unrolled Causal DAG</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>g</strong> – (networkx.DiGraph) Oriented Unrolled Causal DAG estimate outputted by Step 4 (Orient) of TPC.</p></li>
+<li><p><strong>causaleff</strong> – (numpy.array) Estimated Interventional Causal Effects in Unrolled DAG</p></li>
+<li><p><strong>maxdelay</strong> – (int) Maximum time-delay of interaction</p></li>
+<li><p><strong>m</strong> – (int) Number of neurons/nodes in original data</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(numpy.array) Adjacency matrix for the Rolled CFC-DPGM estimate.
+wdir: (numpy.array) Weights for direct connections in the Rolled CFC-DPGM.
+windir: (numpy.array) Weights for indirect/direct connections in the Rolled CFC-DPGM.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>adjacency</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-timeawarepc.pcalg">
+<span id="timeawarepc-pcalg-module"></span><h2>timeawarepc.pcalg module<a class="headerlink" href="#module-timeawarepc.pcalg" title="Permalink to this headline">¶</a></h2>
+<p>A graph generator based on the PC algorithm [Kalisch2007] via <a class="reference external" href="https://github.com/keiichishima/pcalg">https://github.com/keiichishima/pcalg</a></p>
+<dl class="py function">
+<dt class="sig sig-object py" id="timeawarepc.pcalg.estimate_cpdag">
+<span class="sig-prename descclassname"><span class="pre">timeawarepc.pcalg.</span></span><span class="sig-name descname"><span class="pre">estimate_cpdag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skel_graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep_set</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/timeawarepc/pcalg.html#estimate_cpdag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#timeawarepc.pcalg.estimate_cpdag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate a CPDAG from the skeleton graph and separation sets
+returned by the estimate_skeleton() function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>skel_graph</strong> – A skeleton graph (an undirected networkx.Graph).</p></li>
+<li><p><strong>sep_set</strong> – <p>An 2D-array of separation set.
+The contents look like something like below.</p>
+<blockquote>
+<div><p>sep_set[i][j] = set([k, l, m])</p>
+</div></blockquote>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An estimated DAG.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="timeawarepc.pcalg.estimate_skeleton">
+<span class="sig-prename descclassname"><span class="pre">timeawarepc.pcalg.</span></span><span class="sig-name descname"><span class="pre">estimate_skeleton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">indep_test_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/timeawarepc/pcalg.html#estimate_skeleton"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#timeawarepc.pcalg.estimate_skeleton" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate a skeleton graph from the statistis information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>indep_test_func</strong> – the function name for a conditional
+independency test.</p></li>
+<li><p><strong>data_matrix</strong> – data (as a numpy array).</p></li>
+<li><p><strong>alpha</strong> – the significance level.</p></li>
+<li><p><strong>kwargs</strong> – <dl class="simple">
+<dt>‘max_reach’: maximum value of l (see the code).  The</dt><dd><p>value depends on the underlying distribution.</p>
+</dd>
+<dt>’method’: if ‘stable’ given, use stable-PC algorithm</dt><dd><p>(see [Colombo2014]).</p>
+</dd>
+<dt>’init_graph’: initial structure of skeleton graph</dt><dd><p>(as a networkx.Graph). If not specified,
+a complete graph is used.</p>
+</dd>
+<dt>other parameters may be passed depending on the</dt><dd><p>indep_test_func()s.</p>
+</dd>
+</dl>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a skeleton graph (as a networkx.Graph).
+sep_set: a separation set (as an 2D-array of set()).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>g</p>
+</dd>
+</dl>
+<p>[Colombo2014] Diego Colombo and Marloes H Maathuis. Order-independent
+constraint-based causal structure learning. In The Journal of Machine
+Learning Research, Vol. 15, pp. 3741-3782, 2014.</p>
+</dd></dl>
+
+</section>
+<section id="module-timeawarepc.pcalg_helpers">
+<span id="timeawarepc-pcalg-helpers-module"></span><h2>timeawarepc.pcalg_helpers module<a class="headerlink" href="#module-timeawarepc.pcalg_helpers" title="Permalink to this headline">¶</a></h2>
+<p>Helper functions for PC algorithm.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="timeawarepc.pcalg_helpers.ci_test_gauss">
+<span class="sig-prename descclassname"><span class="pre">timeawarepc.pcalg_helpers.</span></span><span class="sig-name descname"><span class="pre">ci_test_gauss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/timeawarepc/pcalg_helpers.html#ci_test_gauss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#timeawarepc.pcalg_helpers.ci_test_gauss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Conduct Conditional Independence Test using Fisher’s Z-transform
+for node A conditionally independent of node B given set of nodes in S.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – (numpy.array) of shape (n,p) with n samples for p nodes</p></li>
+<li><p><strong>A</strong> – (int) node index in data</p></li>
+<li><p><strong>B</strong> – (int) node index in data</p></li>
+<li><p><strong>S</strong> – (set) set of node indices in data</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(float) p-value of the conditional independence test for A and B given S.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pval</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="timeawarepc.pcalg_helpers.partial_corr">
+<span class="sig-prename descclassname"><span class="pre">timeawarepc.pcalg_helpers.</span></span><span class="sig-name descname"><span class="pre">partial_corr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/timeawarepc/pcalg_helpers.html#partial_corr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#timeawarepc.pcalg_helpers.partial_corr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find Partial Correlation of var A and var B given set of vars in S.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – (numpy.array) of shape (n,p) with n samples for p nodes</p></li>
+<li><p><strong>A</strong> – (int) node index in data</p></li>
+<li><p><strong>B</strong> – (int) node index in data</p></li>
+<li><p><strong>S</strong> – (set) set of node indices in data</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Partial correlation between A and B given S.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>p_corr</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-timeawarepc.gc">
+<span id="timeawarepc-gc-module"></span><h2>timeawarepc.gc module<a class="headerlink" href="#module-timeawarepc.gc" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="timeawarepc.gc.cfc_gc">
+<span class="sig-prename descclassname"><span class="pre">timeawarepc.gc.</span></span><span class="sig-name descname"><span class="pre">cfc_gc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxdelay</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/timeawarepc/gc.html#cfc_gc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#timeawarepc.gc.cfc_gc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimate Causal Functional Connectivity using Granger Causality.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – (numpy.array) of shape (n,p) with n samples for p nodes</p></li>
+<li><p><strong>maxdelay</strong> – Maximum time-delay of interactions.</p></li>
+<li><p><strong>alpha</strong> – (float) Significance level for conditional independence tests</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(numpy.array) Adcajency matrix of shape (p,p) of estimated CFC by Granger Causality.
+weights: (numpy.array) Connectivity Weight matrix of shape (p,p).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>adjacency</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-timeawarepc.simulate_data">
+<span id="timeawarepc-simulate-data-module"></span><h2>timeawarepc.simulate_data module<a class="headerlink" href="#module-timeawarepc.simulate_data" title="Permalink to this headline">¶</a></h2>
+<p>Create simulated time series dataset from three different paradigms:
+Linear Gaussian Vector-AutoRegressive (VAR) Model,
+Non-linear Non-Gaussian VAR Model, and
+Continuous Time Recurrent Neural Networks (CTRNN).</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="timeawarepc.simulate_data.simulate_ctrnn">
+<span class="sig-prename descclassname"><span class="pre">timeawarepc.simulate_data.</span></span><span class="sig-name descname"><span class="pre">simulate_ctrnn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_ctrnn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/timeawarepc/simulate_data.html#simulate_ctrnn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#timeawarepc.simulate_data.simulate_ctrnn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulates a CTRNN.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_ctrnn</strong> – Number of time points in the CTRNN</p></li>
+<li><p><strong>p</strong> – Number of nodes.</p></li>
+<li><p><strong>w</strong> – Weight matrix.</p></li>
+<li><p><strong>tau</strong> – Time constant of the CTRNN.</p></li>
+<li><p><strong>noise</strong> – Noise level in the CTRNN.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(numpy.array) CTRNN time series of shape (p,n_ctrnn).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>u</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="timeawarepc.simulate_data.simulate_data">
+<span class="sig-prename descclassname"><span class="pre">timeawarepc.simulate_data.</span></span><span class="sig-name descname"><span class="pre">simulate_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/timeawarepc/simulate_data.html#simulate_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#timeawarepc.simulate_data.simulate_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulate time seris data from one of three simulation paradigms with 4 neurons.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – (string)
+‘lingauss’: Linear Gaussian VAR model
+‘nonlinnongauss’: Non-linear Non-Gaussian VAR model
+‘ctrnn’: Continuous Time Recurrent Neural Networks</p></li>
+<li><p><strong>T</strong> – (int) Number of time recordings in the time series</p></li>
+<li><p><strong>noise</strong> – (float) Noise standard deviation</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(numpy.array) Time series data of shape (n,p) with n time recordings for p nodes
+CFCtruth: (numpy.array) Ground Truth adjacency matrix of shape (p,p).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>data</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 

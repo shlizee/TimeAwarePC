@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>timeawarepc.gc &mdash; timeawarepc 2022 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> timeawarepc
+            <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">About TimeAwarePC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../methodology.html">Methodology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installguide.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gettingstarted.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeawarepc.html">timeawarepc package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">timeawarepc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>timeawarepc.gc</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for timeawarepc.gc</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">nitime.analysis</span> <span class="k">as</span> <span class="nn">nta</span>
+<span class="kn">import</span> <span class="nn">nitime.timeseries</span> <span class="k">as</span> <span class="nn">ts</span>
+<div class="viewcode-block" id="cfc_gc"><a class="viewcode-back" href="../../timeawarepc.html#timeawarepc.gc.cfc_gc">[docs]</a><span class="k">def</span> <span class="nf">cfc_gc</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">maxdelay</span><span class="p">,</span><span class="n">alpha</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Estimate Causal Functional Connectivity using Granger Causality.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data: (numpy.array) of shape (n,p) with n samples for p nodes </span>
+<span class="sd">        maxdelay: Maximum time-delay of interactions. </span>
+<span class="sd">        alpha: (float) Significance level for conditional independence tests</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        adjacency: (numpy.array) Adcajency matrix of shape (p,p) of estimated CFC by Granger Causality.</span>
+<span class="sd">        weights: (numpy.array) Connectivity Weight matrix of shape (p,p).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">TR</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">thresh</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">time_series</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">TimeSeries</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">sampling_interval</span><span class="o">=</span><span class="n">TR</span><span class="p">)</span>
+    <span class="n">order</span><span class="o">=</span><span class="n">maxdelay</span>
+    <span class="n">G</span> <span class="o">=</span> <span class="n">nta</span><span class="o">.</span><span class="n">GrangerAnalyzer</span><span class="p">(</span><span class="n">time_series</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">)</span>
+    <span class="n">adj_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+    <span class="n">adj_mat</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">causality_xy</span><span class="p">[:,</span> <span class="p">:]),</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">causality_yx</span><span class="p">[:,</span> <span class="p">:]),</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">adjmat1</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">causality_xy</span><span class="p">[:,</span> <span class="p">:]),</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">adjmat2</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">causality_yx</span><span class="p">[:,</span> <span class="p">:]),</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">adj_mat</span><span class="o">=</span><span class="n">adjmat1</span><span class="o">+</span><span class="n">adjmat2</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">weights</span> <span class="o">=</span> <span class="n">adj_mat</span>
+    <span class="n">thresh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">adj_mat</span><span class="p">,(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">adjacency</span><span class="o">=</span><span class="p">(</span><span class="n">adj_mat</span> <span class="o">&gt;</span> <span class="n">thresh</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">adjacency</span><span class="p">,</span> <span class="n">weights</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Rahul Biswas.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

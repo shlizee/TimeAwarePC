@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>timeawarepc.tpc &mdash; timeawarepc 2022 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> timeawarepc
+            <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">About TimeAwarePC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../methodology.html">Methodology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installguide.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gettingstarted.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../timeawarepc.html">timeawarepc package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">timeawarepc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>timeawarepc.tpc</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for timeawarepc.tpc</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Implements the Time-Aware PC (TPC) Algorithm for finding Causal Functional Connectivity from Time Series [BiswasShlizerman2022].</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">timeawarepc.tpc_helpers</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">timeawarepc.pcalg</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">rpy2.robjects</span> <span class="k">as</span> <span class="nn">robjects</span>
+<span class="kn">from</span> <span class="nn">rpy2.robjects.packages</span> <span class="kn">import</span> <span class="n">importr</span>
+<span class="kn">import</span> <span class="nn">rpy2.rlike.container</span> <span class="k">as</span> <span class="nn">rlc</span>
+<span class="kn">from</span> <span class="nn">rpy2.robjects</span> <span class="kn">import</span> <span class="n">pandas2ri</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="c1">#%%</span>
+<div class="viewcode-block" id="cfc_tpc"><a class="viewcode-back" href="../../timeawarepc.html#timeawarepc.tpc.cfc_tpc">[docs]</a><span class="k">def</span> <span class="nf">cfc_tpc</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">maxdelay</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">subsampsize</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span><span class="n">niter</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">thresh</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span><span class="n">isgauss</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Estimate Causal Functional Connectivity using TPC Algorithm.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data: (numpy.array) of shape (n,p) with n time-recordings for p nodes .</span>
+<span class="sd">        maxdelay: (int) Maximum time-delay of interactions.</span>
+<span class="sd">        subsampsize: (int) Bootstrap window width.</span>
+<span class="sd">        niter: (int) Number of bootstrap iterations.</span>
+<span class="sd">        alpha: (float) Significance level for conditional independence tests.</span>
+<span class="sd">        thresh: (float) Bootstrap stability cut-off.</span>
+<span class="sd">        isgauss: (boolean) </span>
+<span class="sd">            True: Assume Gaussian Noise distribution. </span>
+<span class="sd">            False: Distribution-free.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        adjacency: (numpy.array) Adcajency matrix of shape (p,p) for estimated CFC by TPC Algorithm.</span>
+<span class="sd">        weights: (numpy.array) Connectivity Weight matrix of shape (p,p).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">C_iter</span><span class="o">=</span><span class="p">[]</span>
+    <span class="n">C_cf_iter</span><span class="o">=</span><span class="p">[]</span>
+    <span class="n">C_cf2_iter</span><span class="o">=</span><span class="p">[]</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">data_trans</span> <span class="o">=</span> <span class="n">data_transformed</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">maxdelay</span><span class="p">)</span><span class="c1">#Step 1: Time-Delayed Samples</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Data transformed in &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start_time</span><span class="p">))</span>
+
+    <span class="c1">#Steps 2-6a:</span>
+    <span class="k">for</span> <span class="n">inneriter</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">niter</span><span class="p">):</span>
+        <span class="n">start_btrstrp</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Starting bootstrap &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">inneriter</span><span class="p">))</span>
+        <span class="n">n</span><span class="o">=</span><span class="n">data_trans</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1">#Step 2: Select random Bootstrap window</span>
+        <span class="n">r_idx</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">subsampsize</span><span class="p">),</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        
+        <span class="c1">#Step 3: PC</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">isgauss</span><span class="p">:</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;print.me&#39;</span><span class="p">:</span> <span class="s1">&#39;print_dot_me&#39;</span><span class="p">,</span> <span class="s1">&#39;print_me&#39;</span><span class="p">:</span> <span class="s1">&#39;print_uscore_me&#39;</span><span class="p">}</span>
+            <span class="n">kpcalg</span> <span class="o">=</span> <span class="n">importr</span><span class="p">(</span><span class="s1">&#39;kpcalg&#39;</span><span class="p">,</span> <span class="n">robject_translations</span> <span class="o">=</span> <span class="n">d</span><span class="p">)</span>
+            <span class="n">data_trans_pd</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_trans</span><span class="p">[</span><span class="n">r_idx</span><span class="p">:(</span><span class="n">r_idx</span><span class="o">+</span><span class="n">subsampsize</span><span class="p">),:])</span>
+            <span class="n">pandas2ri</span><span class="o">.</span><span class="n">activate</span><span class="p">()</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">robjects</span><span class="o">.</span><span class="n">conversion</span><span class="o">.</span><span class="n">py2rpy</span><span class="p">(</span><span class="n">data_trans_pd</span><span class="p">)</span>
+            <span class="n">base</span><span class="o">=</span><span class="n">importr</span><span class="p">(</span><span class="s2">&quot;base&quot;</span><span class="p">)</span>
+            <span class="n">out</span><span class="o">=</span><span class="n">kpcalg</span><span class="o">.</span><span class="n">kpc</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s1">&#39;suffStat&#39;</span> <span class="p">:</span> <span class="n">rlc</span><span class="o">.</span><span class="n">TaggedList</span><span class="p">((</span><span class="n">df</span><span class="p">,</span><span class="s2">&quot;hsic.perm&quot;</span><span class="p">),</span><span class="n">tags</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span><span class="s1">&#39;ic.method&#39;</span><span class="p">)),</span>
+            <span class="s1">&#39;indepTest&#39;</span> <span class="p">:</span> <span class="n">kpcalg</span><span class="o">.</span><span class="n">kernelCItest</span><span class="p">,</span>
+            <span class="s1">&#39;alpha&#39;</span> <span class="p">:</span> <span class="n">alpha</span><span class="p">,</span>
+            <span class="s1">&#39;labels&#39;</span> <span class="p">:</span> <span class="n">data_trans_pd</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">),</span>
+            <span class="s1">&#39;u2pd&#39;</span> <span class="p">:</span> <span class="s2">&quot;relaxed&quot;</span><span class="p">,</span>
+            <span class="s1">&#39;skel.method&#39;</span> <span class="p">:</span> <span class="s2">&quot;stable&quot;</span><span class="p">,</span>
+            <span class="s1">&#39;verbose&#39;</span> <span class="p">:</span> <span class="n">robjects</span><span class="o">.</span><span class="n">r</span><span class="p">(</span><span class="s1">&#39;F&#39;</span><span class="p">)})</span>
+            <span class="n">dollar</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s2">&quot;@&quot;</span><span class="p">]</span>
+            <span class="n">graphobj</span><span class="o">=</span><span class="n">dollar</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="s2">&quot;graph&quot;</span><span class="p">)</span>
+            <span class="n">graph</span><span class="o">=</span><span class="n">importr</span><span class="p">(</span><span class="s2">&quot;graph&quot;</span><span class="p">)</span>
+            <span class="n">graphedges</span><span class="o">=</span><span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">graphobj</span><span class="p">)</span><span class="c1">#, &quot;matrix&quot;)</span>
+            <span class="n">graphedgespy</span><span class="o">=</span><span class="p">{</span><span class="nb">int</span><span class="p">(</span><span class="n">key</span><span class="p">):</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;-?\d+\.?\d*&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">graphedges</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="n">key</span><span class="p">)))[</span><span class="mi">1</span><span class="p">:])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">graphedges</span><span class="o">.</span><span class="n">names</span><span class="p">}</span>
+            <span class="n">g</span><span class="o">=</span><span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">(</span><span class="n">graphedgespy</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data_trans_pd</span><span class="o">=</span><span class="n">data_trans</span><span class="p">[</span><span class="n">r_idx</span><span class="p">:(</span><span class="n">r_idx</span><span class="o">+</span><span class="n">subsampsize</span><span class="p">),:]</span>
+            <span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">sep_set</span><span class="p">)</span> <span class="o">=</span> <span class="n">estimate_skeleton</span><span class="p">(</span><span class="n">indep_test_func</span><span class="o">=</span><span class="n">ci_test_gauss</span><span class="p">,</span>
+                                                <span class="n">data_matrix</span><span class="o">=</span><span class="n">data_trans_pd</span><span class="p">,</span>
+                                                <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;stable&#39;</span><span class="p">)</span>
+            <span class="n">g</span> <span class="o">=</span> <span class="n">estimate_cpdag</span><span class="p">(</span><span class="n">skel_graph</span><span class="o">=</span><span class="n">g</span><span class="p">,</span> <span class="n">sep_set</span><span class="o">=</span><span class="n">sep_set</span><span class="p">)</span>
+        
+        <span class="c1">#Step 4: Orient</span>
+        <span class="n">g</span><span class="o">=</span><span class="n">orient</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="n">maxdelay</span><span class="p">,</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="c1">#Step 5: Rolled CFC-DPGM</span>
+        <span class="n">causaleff</span> <span class="o">=</span> <span class="n">causaleff_ida</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="n">data_trans</span><span class="p">)</span><span class="c1">#Interventional Causal Effects in Unrolled DAG</span>
+        <span class="n">G</span><span class="p">,</span><span class="n">causaleffin</span><span class="p">,</span> <span class="n">causaleffin2</span><span class="o">=</span><span class="n">return_finaledges</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="n">causaleff</span><span class="p">,</span><span class="n">maxdelay</span><span class="p">,</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="c1">#Rolled CFC-DPGM</span>
+        
+        <span class="n">A_rr</span><span class="o">=</span><span class="n">G</span>
+        <span class="n">C_iter</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">A_rr</span><span class="p">)</span>
+        <span class="n">C_cf_iter</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">causaleffin</span><span class="p">)</span>
+        <span class="n">C_cf2_iter</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">causaleffin2</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bootstrap done in &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start_btrstrp</span><span class="p">))</span>
+        <span class="c1">#Step 6a: Repeat Steps 2-5    </span>
+
+    <span class="c1">#Step 6b-c: Robust Edges and Connectivity Weights</span>
+    <span class="n">adjacency</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">C_iter</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">&gt;=</span><span class="n">thresh</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="c1">#Robust Edges</span>
+    <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">RuntimeWarning</span><span class="p">)</span>
+        <span class="n">weights</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">C_cf_iter</span><span class="p">)</span><span class="o">!=</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">C_cf_iter</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="c1">#Robust Connectivity Weights</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CE shape &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">weights</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+
+    <span class="c1">#Step 8: Pruning</span>
+    <span class="n">adjacency</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">weights</span><span class="p">))</span><span class="o">/</span><span class="mi">10</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
+
+    <span class="k">return</span> <span class="n">adjacency</span><span class="p">,</span> <span class="n">weights</span></div>
+
+<div class="viewcode-block" id="cfc_pc"><a class="viewcode-back" href="../../timeawarepc.html#timeawarepc.tpc.cfc_pc">[docs]</a><span class="k">def</span> <span class="nf">cfc_pc</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span><span class="n">isgauss</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Estimate Causal Functional Connectivity using PC Algorithm.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data: (numpy.array) of shape (n,p) with n samples for p nodes </span>
+<span class="sd">        alpha: (float) Significance level for conditional independence tests</span>
+<span class="sd">        isgauss: (boolean) </span>
+<span class="sd">            True: Assume Gaussian Noise distribution, </span>
+<span class="sd">            False: Distribution free.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        adjacency: (numpy.array) Adcajency matrix of shape (p,p) of estimated CFC by PC Algorithm.</span>
+<span class="sd">        weights: (numpy.array) Connectivity Weight matrix of shape (p,p).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">isgauss</span><span class="p">:</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;print.me&#39;</span><span class="p">:</span> <span class="s1">&#39;print_dot_me&#39;</span><span class="p">,</span> <span class="s1">&#39;print_me&#39;</span><span class="p">:</span> <span class="s1">&#39;print_uscore_me&#39;</span><span class="p">}</span>
+        <span class="n">kpcalg</span> <span class="o">=</span> <span class="n">importr</span><span class="p">(</span><span class="s1">&#39;kpcalg&#39;</span><span class="p">,</span> <span class="n">robject_translations</span> <span class="o">=</span> <span class="n">d</span><span class="p">)</span>
+        <span class="n">data_trans_pd</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">pandas2ri</span><span class="o">.</span><span class="n">activate</span><span class="p">()</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">robjects</span><span class="o">.</span><span class="n">conversion</span><span class="o">.</span><span class="n">py2rpy</span><span class="p">(</span><span class="n">data_trans_pd</span><span class="p">)</span>
+        <span class="n">out</span><span class="o">=</span><span class="n">kpcalg</span><span class="o">.</span><span class="n">kpc</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s1">&#39;suffStat&#39;</span> <span class="p">:</span> <span class="n">rlc</span><span class="o">.</span><span class="n">TaggedList</span><span class="p">((</span><span class="n">df</span><span class="p">,</span><span class="s2">&quot;hsic.perm&quot;</span><span class="p">),</span><span class="n">tags</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span><span class="s1">&#39;ic.method&#39;</span><span class="p">)),</span><span class="c1">#robjects.r(&#39;list(data=data_trans, ic.method=&quot;hsic.perm&quot;)&#39;),#list(data=data_trans, ic.method=&quot;hsic.perm&quot;),</span>
+        <span class="s1">&#39;indepTest&#39;</span> <span class="p">:</span> <span class="n">kpcalg</span><span class="o">.</span><span class="n">kernelCItest</span><span class="p">,</span>
+        <span class="s1">&#39;alpha&#39;</span> <span class="p">:</span> <span class="n">alpha</span><span class="p">,</span>
+        <span class="s1">&#39;labels&#39;</span> <span class="p">:</span> <span class="n">data_trans_pd</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">),</span>
+        <span class="s1">&#39;u2pd&#39;</span> <span class="p">:</span> <span class="s2">&quot;relaxed&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;skel.method&#39;</span> <span class="p">:</span> <span class="s2">&quot;stable&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;verbose&#39;</span> <span class="p">:</span> <span class="n">robjects</span><span class="o">.</span><span class="n">r</span><span class="p">(</span><span class="s1">&#39;F&#39;</span><span class="p">)})</span>
+        <span class="n">base</span><span class="o">=</span><span class="n">importr</span><span class="p">(</span><span class="s2">&quot;base&quot;</span><span class="p">)</span>
+        <span class="n">dollar</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="s2">&quot;@&quot;</span><span class="p">]</span>
+        <span class="n">graphobj</span><span class="o">=</span><span class="n">dollar</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="s2">&quot;graph&quot;</span><span class="p">)</span>
+        <span class="n">graph</span><span class="o">=</span><span class="n">importr</span><span class="p">(</span><span class="s2">&quot;graph&quot;</span><span class="p">)</span>
+        <span class="n">graphedges</span><span class="o">=</span><span class="n">graph</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">graphobj</span><span class="p">)</span><span class="c1">#, &quot;matrix&quot;)</span>
+        <span class="kn">import</span> <span class="nn">re</span>
+        <span class="n">graphedgespy</span><span class="o">=</span><span class="p">{</span><span class="nb">int</span><span class="p">(</span><span class="n">key</span><span class="p">):</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;-?\d+\.?\d*&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">graphedges</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="n">key</span><span class="p">)))[</span><span class="mi">1</span><span class="p">:])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">graphedges</span><span class="o">.</span><span class="n">names</span><span class="p">}</span>
+        <span class="n">g</span><span class="o">=</span><span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">(</span><span class="n">graphedgespy</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">sep_set</span><span class="p">)</span> <span class="o">=</span> <span class="n">estimate_skeleton</span><span class="p">(</span><span class="n">indep_test_func</span><span class="o">=</span><span class="n">ci_test_gauss</span><span class="p">,</span>
+                                            <span class="n">data_matrix</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+                                            <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;stable&#39;</span><span class="p">)</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">estimate_cpdag</span><span class="p">(</span><span class="n">skel_graph</span><span class="o">=</span><span class="n">g</span><span class="p">,</span> <span class="n">sep_set</span><span class="o">=</span><span class="n">sep_set</span><span class="p">)</span>
+
+    <span class="n">weights</span> <span class="o">=</span> <span class="n">causaleff_ida</span><span class="p">(</span><span class="n">g</span><span class="p">,</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">adjacency</span><span class="o">=</span><span class="n">nx</span><span class="o">.</span><span class="n">adjacency_matrix</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">adjacency</span><span class="p">,</span> <span class="n">weights</span></div>
+<span class="c1"># %%</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Rahul Biswas.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
