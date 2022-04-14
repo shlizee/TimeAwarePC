@@ -10,14 +10,8 @@ Typical use case:
 .. image:: Schematic.png
    :width: 500
 
-
-The advantages of using TPC are summarized in the table below.
-
-.. image:: tablesummary.png
-   :width: 500
-
 The package currently supports the following methods:
 
-- :ref:`Time-Aware PC Algorithm <TPC>`
-- :ref:`PC Algorithm <PC>`
-- :ref:`Granger Causality <GC>`
+- :ref:`Time-Aware PC Algorithm <Time-Aware PC Algorithm>`
+- :ref:`PC Algorithm <PC Algorithm>`
+- :ref:`Granger Causality <Granger Causality>`
