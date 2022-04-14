@@ -13,7 +13,6 @@ Welcome to Time-Aware PC's documentation
    source/intro
    source/methodology
    source/gettingstarted
-   source/quickstartguide
    source/timeawarepc
    source/references
    source/changelog
