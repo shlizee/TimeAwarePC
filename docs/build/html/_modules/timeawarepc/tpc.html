@@ -73,7 +73,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for timeawarepc.tpc</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Implements the Time-Aware PC (TPC) Algorithm for finding Causal Functional Connectivity from Time Series [BiswasShlizerman2022].</span>
+<span></span><span class="sd">&quot;&quot;&quot;Implements the Time-Aware PC (TPC) Algorithm for finding Causal Functional Connectivity from Time Series.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -107,6 +107,8 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        adjacency: (numpy.array) Adcajency matrix of shape (p,p) for estimated CFC by TPC Algorithm.</span>
 <span class="sd">        weights: (numpy.array) Connectivity Weight matrix of shape (p,p).</span>
+
+<span class="sd">    Biswas, Rahul and Shlizerman, Eli (2022). Statistical perspective on functional and causal neural connectomics: the time-aware pc algorithm. arXiv preprint arXiv:2204.04845.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">C_iter</span><span class="o">=</span><span class="p">[]</span>
     <span class="n">C_cf_iter</span><span class="o">=</span><span class="p">[]</span>

@@ -132,7 +132,7 @@ weights: (numpy.array) Connectivity Weights in the CFC</p>
 </section>
 <section id="module-timeawarepc.tpc">
 <span id="timeawarepc-tpc-module"></span><h2>timeawarepc.tpc module<a class="headerlink" href="#module-timeawarepc.tpc" title="Permalink to this headline">¶</a></h2>
-<p>Implements the Time-Aware PC (TPC) Algorithm for finding Causal Functional Connectivity from Time Series [BiswasShlizerman2022].</p>
+<p>Implements the Time-Aware PC (TPC) Algorithm for finding Causal Functional Connectivity from Time Series.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="timeawarepc.tpc.cfc_pc">
 <span class="sig-prename descclassname"><span class="pre">timeawarepc.tpc.</span></span><span class="sig-name descname"><span class="pre">cfc_pc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isgauss</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/timeawarepc/tpc.html#cfc_pc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#timeawarepc.tpc.cfc_pc" title="Permalink to this definition">¶</a></dt>
@@ -183,6 +183,7 @@ weights: (numpy.array) Connectivity Weight matrix of shape (p,p).</p>
 <dd class="field-odd"><p>adjacency</p>
 </dd>
 </dl>
+<p>Biswas, Rahul and Shlizerman, Eli (2022). Statistical perspective on functional and causal neural connectomics: the time-aware pc algorithm. arXiv preprint arXiv:2204.04845.</p>
 </dd></dl>
 
 </section>
@@ -284,8 +285,7 @@ windir: (numpy.array) Weights for indirect/direct connections in the Rolled CFC-
 <dl class="py function">
 <dt class="sig sig-object py" id="timeawarepc.pcalg.estimate_cpdag">
 <span class="sig-prename descclassname"><span class="pre">timeawarepc.pcalg.</span></span><span class="sig-name descname"><span class="pre">estimate_cpdag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skel_graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep_set</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/timeawarepc/pcalg.html#estimate_cpdag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#timeawarepc.pcalg.estimate_cpdag" title="Permalink to this definition">¶</a></dt>
-<dd><p>Estimate a CPDAG from the skeleton graph and separation sets
-returned by the estimate_skeleton() function.</p>
+<dd><p>Estimate a CPDAG from the skeleton graph and separation sets returned by the estimate_skeleton() function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
