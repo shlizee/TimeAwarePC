@@ -65,7 +65,7 @@ Compare the Ground Truth and Estimated CFC
 
 Estimate CFC - another way
 ~~~~~~~~~~~~~~~~~~~~~~~~
-Alternatively, you may estimate CFC using the python functions for individual methods.
+Alternatively, you may estimate CFC using the python functions for individual methods: cfc_tpc, cfc_pc, cfc_gc.
 
 Specify a method_name. 'TPC' for Time-Aware PC Algorithm, 'PC' for PC Algorithm, 'GC' for Granger Causality.
 
