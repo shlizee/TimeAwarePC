@@ -42,10 +42,10 @@ BiocManager::install("RBGL")
 install.packages("pcalg")
 install.packages("kpcalg")
 ```
-- In addition, if you like to use Granger Causality functions in this package, please separately install nitime as follows:
+<!-- - In addition, if you like to use Granger Causality functions in this package, please separately install nitime as follows:
 ```
 pip install nitime
-```
+``` -->
 
 ## Documentation
 
