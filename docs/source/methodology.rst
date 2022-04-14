@@ -5,7 +5,7 @@ Methodology
 Time-Aware PC Algorithm
 -----------------------
 
-TPC estimates the Causal Functional Connectivity (CFC) from time series observations using recent developments in Directed Probabilistic Graphical Modeling. :cite:`biswasshlizerman2022-2`.
+TPC estimates the Causal Functional Connectivity (CFC) from time series observations. :cite:`biswasshlizerman2022-2`.
 
 .. image:: TPC_Schematic.png
    :width: 500
@@ -16,7 +16,7 @@ TPC estimates the Causal Functional Connectivity (CFC) from time series observat
 PC Algorithm
 ------------
 
-PC is an algorithm for causal inference from static data, that is based on independent and identically distributed observations. :cite:`kalishbuhlmann,biswasshlizerman2022-1`.
+PC is an algorithm for causal inference based on Directed Probabilistic Graphical Modeling (DPGM), which is suited for static data, i.e., independent and identically distributed observations. :cite:`kalishbuhlmann,biswasshlizerman2022-1`.
 
 .. image:: PC_Schematic.png
    :width: 500
