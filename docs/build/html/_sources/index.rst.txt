@@ -12,6 +12,7 @@ Welcome to Time-Aware PC's documentation
 
    intro
    methodology
+   installguide
    gettingstarted
    timeawarepc
    references

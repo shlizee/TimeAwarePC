@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About &mdash; timeawarepc 2022 documentation</title>
+  <title>About TimeAwarePC &mdash; timeawarepc 2022 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -43,9 +43,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">About</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">About TimeAwarePC</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#benefits-of-tpc">Benefits of TPC</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="methodology.html">Methodology</a></li>
-<li class="toctree-l1"><a class="reference internal" href="methodology.html#comparison-of-different-methodologies">Comparison of Different Methodologies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installguide.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Quick Start Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="timeawarepc.html">timeawarepc package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
@@ -65,7 +68,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>About</li>
+      <li>About TimeAwarePC</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/intro.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -75,20 +78,24 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="about">
-<h1>About<a class="headerlink" href="#about" title="Permalink to this headline">¶</a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">TimeAwarePC</span></code> is a Python package that implements the <strong>Time-Aware PC</strong> (TPC) algorithm for finding <strong>Causal Functional Connectivity</strong> (CFC) from time series observations. Essentially, it estimates the causal network between nodes of the time series and its connectivity weights, in a non-parametric manner, using recent developments in directed probabilistic graphical modeling for time series. The package also includes implementations of the PC algorithm and Granger Causality (GC) to estimate the CFC.</p>
-<p>Typical use case:</p>
+  <section id="about-timeawarepc">
+<h1>About TimeAwarePC<a class="headerlink" href="#about-timeawarepc" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">TimeAwarePC</span></code> is a Python package that implements the <strong>Time-Aware PC</strong> (TPC) algorithm for finding <strong>Causal Functional Connectivity</strong> (CFC) from time series observations. Essentially, it estimates the causal network between nodes of the time series and the connectivity weights, in a non-parametric manner, using recent developments in directed probabilistic graphical modeling in time series. The package also includes implementations of the PC algorithm and Granger Causality (GC) to estimate the CFC.</p>
+<p>Typical use scenario:</p>
 <ul class="simple">
-<li><p><strong>Neural Connectomics</strong>: The representation of the flow of information between neurons in the brain based on their activity is termed the causal functional connectome. The causal functional connectome is not directly observed and needs to be inferred from neural time series. The model outcome of TPC reflects causality of neural interactions such as being non-parametric, exhibits the directed Markov property in a time-series setting, and is predictive of the consequence of counterfactual interventions on the time series.</p></li>
+<li><p><strong>Neural Connectomics</strong>: The representation of the flow of information between neurons in the brain based on their activity is termed the causal functional connectome (CFC). The CFC is not directly observed and needs to be inferred from neural time series.</p></li>
 </ul>
 <a class="reference internal image-reference" href="_images/Schematic.png"><img alt="_images/Schematic.png" class="align-center" src="_images/Schematic.png" style="width: 500px;" /></a>
+<section id="benefits-of-tpc">
+<h2>Benefits of TPC<a class="headerlink" href="#benefits-of-tpc" title="Permalink to this headline">¶</a></h2>
+<p>TPC algorithm has been shown to outperform other approaches in estimating the CFC from neural time series, in a variety of simulation, benchmark, and real neurobiological datasets. The model outcome of TPC reflects causality of neural interactions such as being non-parametric, exhibits the directed Markov property in a time-series setting, and is predictive of the consequence of counterfactual interventions on the time series. <span id="id1">[<a class="reference internal" href="references.html#id3" title="Rahul Biswas and Eli Shlizerman. Statistical perspective on functional and causal neural connectomics: the time-aware pc algorithm. arXiv preprint arXiv:2204.04845, 2022.">1</a>]</span></p>
 <p>The package currently supports the following methods:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="methodology.html#time-aware-pc-algorithm"><span class="std std-ref">Time-Aware PC Algorithm</span></a></p></li>
 <li><p><a class="reference internal" href="methodology.html#pc-algorithm"><span class="std std-ref">PC Algorithm</span></a></p></li>
 <li><p><a class="reference internal" href="methodology.html#granger-causality"><span class="std std-ref">Granger Causality</span></a></p></li>
 </ul>
+</section>
 </section>
 
 

@@ -28,6 +28,9 @@ Granger causality (GC) is a statistical methodology for determining whether one 
 
 Comparison of Methodologies
 ---------------------------
+
+The following summary compares over multiple criteria and shows the advantages of TPC.
+
 .. image:: tablesummary.png
    :align: center
    :width: 500

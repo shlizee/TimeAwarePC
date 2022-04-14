@@ -32,7 +32,7 @@ author = 'Rahul Biswas'
 # The full version, including alpha/beta/rc tags
 release = '2022'
 
-#import timeawarepc
+import timeawarepc
 import sphinx_rtd_theme
 
 # -- General configuration ---------------------------------------------------
@@ -65,7 +65,7 @@ source_suffix = ".rst"
 # The master toctree document.
 master_doc = "index"
 
-version = "0.1.0"
+version = timeawarepc.__version__
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
