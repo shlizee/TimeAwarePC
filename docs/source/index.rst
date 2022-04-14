@@ -11,6 +11,7 @@ Welcome to Time-Aware PC's documentation
    :caption: Contents:
 
    source/intro
+   source/methodology
    source/gettingstarted
    source/quickstartguide
    source/timeawarepc
