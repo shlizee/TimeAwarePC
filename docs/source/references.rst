@@ -7,7 +7,7 @@ Open Source Software Projects
 Python Packages
 ~~~~~~~~~~~~~~~
 
-- `PCalg <https://github.com/keiichishima/pcalg>`_: a python implementation of PC algorithm.
+- `pyPCalg <https://github.com/keiichishima/pcalg>`_: a python implementation of PC algorithm.
 - `NiTime <https://pypi.org/project/nitime/>`_: a library of tools and algorithms for the analysis of time-series data from neuroscience experiments. :cite:`nitime`.
 
 R Packages

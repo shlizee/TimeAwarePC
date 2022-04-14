@@ -4,17 +4,17 @@
    contain the root `toctree` directive.
 
 Welcome to Time-Aware PC's documentation
-=======================================
+========================================
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   source/intro
-   source/methodology
-   source/gettingstarted
-   source/timeawarepc
-   source/references
+   intro
+   methodology
+   gettingstarted
+   timeawarepc
+   references
 
 
 Indices and tables

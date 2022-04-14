@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick Start Guide &mdash; timeawarepc 2022 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="timeawarepc package" href="timeawarepc.html" />
+    <link rel="prev" title="Methodology" href="methodology.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> timeawarepc
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">About TimeAwarePC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="methodology.html">Methodology</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#load-the-packages">Load the packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#simulate-a-dataset">Simulate a dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#estimate-cfc-quick-way">Estimate CFC - quick way</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#compare-the-ground-truth-with-estimated-cfc">Compare the Ground Truth with Estimated CFC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#estimate-cfc-another-way">Estimate CFC - another way</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#compare-the-ground-truth-and-estimated-cfc">Compare the Ground Truth and Estimated CFC</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timeawarepc.html">timeawarepc package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">timeawarepc</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Quick Start Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/gettingstarted.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="quick-start-guide">
+<h1>Quick Start Guide<a class="headerlink" href="#quick-start-guide" title="Permalink to this headline">¶</a></h1>
+<p>Use this tutorial to try out main functionalities of this library and test if it has installed properly.
+In this tutorial, you will be estimating causal functional connectivity (CFC) from simulated datasets.</p>
+<section id="load-the-packages">
+<h2>Load the packages<a class="headerlink" href="#load-the-packages" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">default_rng</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">111</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">timeawarepc.tpc</span> <span class="kn">import</span> <span class="n">cfc_tpc</span><span class="p">,</span> <span class="n">cfc_pc</span><span class="p">,</span> <span class="n">cfc_gc</span>
+<span class="kn">from</span> <span class="nn">timeawarepc.simulate_data</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">timeawarepc.find_cfc</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</section>
+<section id="simulate-a-dataset">
+<h2>Simulate a dataset<a class="headerlink" href="#simulate-a-dataset" title="Permalink to this headline">¶</a></h2>
+<p>Specify a data generating model:
+model = “lingauss” for Linear Gaussian VAR, “nonlinnongauss” for Non-Linear Non-Gaussian VAR, “ctrnn” for Continuous Time Recurrent Neural Network.
+T is the number of time recordings (default 1000), noise is the noise std. deviation (default 1).
+Note that number of neurons = 4 and max delay of interaction = 1 indices are fixed in this tutorial.</p>
+<p>Simulate the dataset using simulate_data().</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;lingauss&#39;</span>
+<span class="n">T</span><span class="o">=</span><span class="mi">1000</span>
+<span class="n">noise</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">data</span><span class="p">,</span> <span class="n">CFCtruth</span> <span class="o">=</span> <span class="n">simulate_data</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">T</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">noise</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="estimate-cfc-quick-way">
+<h2>Estimate CFC - quick way<a class="headerlink" href="#estimate-cfc-quick-way" title="Permalink to this headline">¶</a></h2>
+<p>We will use find_cfc(), a convenient wrapper around different methods in this library.</p>
+<p>Specify a method_name. ‘TPC’ for Time-Aware PC Algorithm, ‘PC’ for PC Algorithm, ‘GC’ for Granger Causality.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">method_name</span> <span class="o">=</span> <span class="s1">&#39;TPC&#39;</span><span class="c1">#&#39;GC&#39;#&#39;PC&#39;</span>
+
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
+<span class="n">maxdelay</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">isgauss</span> <span class="o">=</span> <span class="p">(</span><span class="n">model</span> <span class="o">==</span> <span class="s1">&#39;lingauss&#39;</span><span class="p">)</span>
+<span class="n">adjmat</span><span class="p">,</span> <span class="n">causaleffmat</span> <span class="o">=</span> <span class="n">find_cfc</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">method_name</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span><span class="n">maxdelay</span><span class="o">=</span><span class="n">maxdelay</span><span class="p">,</span><span class="n">isgauss</span><span class="o">=</span><span class="n">isgauss</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="compare-the-ground-truth-with-estimated-cfc">
+<h2>Compare the Ground Truth with Estimated CFC<a class="headerlink" href="#compare-the-ground-truth-with-estimated-cfc" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ground Truth CFC adjacency:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">CFCtruth</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Estimated CFC adjacency by &#39;</span><span class="o">+</span><span class="n">method_name</span><span class="o">+</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">adjmat</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="estimate-cfc-another-way">
+<h2>Estimate CFC - another way<a class="headerlink" href="#estimate-cfc-another-way" title="Permalink to this headline">¶</a></h2>
+<p>Alternatively, you may estimate CFC using the python functions for individual methods: cfc_tpc, cfc_pc, cfc_gc.</p>
+<p>Specify a method_name. ‘TPC’ for Time-Aware PC Algorithm, ‘PC’ for PC Algorithm, ‘GC’ for Granger Causality.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">method_name</span> <span class="o">=</span> <span class="s1">&#39;TPC&#39;</span><span class="c1">#&#39;GC&#39;#&#39;PC&#39;</span>
+
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
+<span class="n">isgauss</span> <span class="o">=</span> <span class="p">(</span><span class="n">model</span> <span class="o">==</span> <span class="s1">&#39;lingauss&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">method_name</span> <span class="o">==</span> <span class="s1">&#39;TPC&#39;</span><span class="p">:</span>
+    <span class="n">maxdelay</span><span class="o">=</span><span class="mi">1</span>
+    <span class="n">niter</span> <span class="o">=</span> <span class="mi">50</span>
+    <span class="n">thresh</span> <span class="o">=</span> <span class="mf">0.25</span>
+    <span class="n">adjmat</span><span class="p">,</span> <span class="n">causaleffmat</span> <span class="o">=</span> <span class="n">cfc_tpc</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">maxdelay</span><span class="o">=</span><span class="n">maxdelay</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span><span class="n">niter</span><span class="o">=</span><span class="n">niter</span><span class="p">,</span><span class="n">thresh</span><span class="o">=</span><span class="n">thresh</span><span class="p">,</span><span class="n">isgauss</span><span class="o">=</span><span class="n">isgauss</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">method_name</span> <span class="o">==</span> <span class="s1">&#39;PC&#39;</span><span class="p">:</span>
+    <span class="n">adjmat</span><span class="p">,</span> <span class="n">causaleffmat</span> <span class="o">=</span> <span class="n">cfc_pc</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span><span class="n">isgauss</span><span class="o">=</span><span class="n">isgauss</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">method_name</span> <span class="o">==</span> <span class="s1">&#39;GC&#39;</span><span class="p">:</span>
+    <span class="n">adjmat</span><span class="p">,</span> <span class="n">causaleffmat</span> <span class="o">=</span> <span class="n">cfc_gc</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">maxdelay</span><span class="p">,</span><span class="n">alpha</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="compare-the-ground-truth-and-estimated-cfc">
+<h2>Compare the Ground Truth and Estimated CFC<a class="headerlink" href="#compare-the-ground-truth-and-estimated-cfc" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ground Truth CFC adjacency:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">CFCtruth</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Estimated CFC adjacency by &#39;</span><span class="o">+</span><span class="n">method_name</span><span class="o">+</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">adjmat</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="methodology.html" class="btn btn-neutral float-left" title="Methodology" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="timeawarepc.html" class="btn btn-neutral float-right" title="timeawarepc package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Rahul Biswas.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

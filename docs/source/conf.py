@@ -49,7 +49,7 @@ extensions = [
     "sphinx.ext.autosectionlabel",
     "sphinxcontrib.bibtex",
 ]
-
+bibtex_bibfiles = ['refs.bib']
 autodoc_mock_imports = ["_tkinter"]
 
 
@@ -65,12 +65,12 @@ source_suffix = ".rst"
 # The master toctree document.
 master_doc = "index"
 
-version = causalml.__version__
+version = "0.1.0"
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = [_build]
+exclude_patterns = []
 pygments_style = "sphinx"
 
 # -- Options for HTML output -------------------------------------------------

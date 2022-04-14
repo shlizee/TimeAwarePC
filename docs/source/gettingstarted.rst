@@ -52,8 +52,8 @@ Specify a method_name. 'TPC' for Time-Aware PC Algorithm, 'PC' for PC Algorithm,
 	adjmat, causaleffmat = find_cfc(data,method_name,alpha=alpha,maxdelay=maxdelay,isgauss=isgauss)
 
 
-Compare the Ground Truth and Estimated CFC
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Compare the Ground Truth with Estimated CFC
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -64,7 +64,7 @@ Compare the Ground Truth and Estimated CFC
 
 
 Estimate CFC - another way
-~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 Alternatively, you may estimate CFC using the python functions for individual methods: cfc_tpc, cfc_pc, cfc_gc.
 
 Specify a method_name. 'TPC' for Time-Aware PC Algorithm, 'PC' for PC Algorithm, 'GC' for Granger Causality.
