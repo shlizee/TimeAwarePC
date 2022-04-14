@@ -8,7 +8,7 @@ https://arxiv.org/abs/2204.04845
 import time
 import numpy as np
 import pandas as pd
-from tpc_helpers import *
+from timeawarepc.tpc_helpers import *
 import rpy2.robjects as robjects
 from rpy2.robjects.packages import importr
 import rpy2.rlike.container as rlc
