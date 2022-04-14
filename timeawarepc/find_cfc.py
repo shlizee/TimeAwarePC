@@ -1,5 +1,6 @@
 """Convenient wrapper for functions in the library.
 """
+__all__ = ["find_cfc"]
 from timeawarepc.tpc import *
 def find_cfc(data,method_name,alpha=0.05,maxdelay=1,niter=50,thresh=0.25,isgauss=False):
     """Estimate Causal Functional Connectivity (CFC) between nodes from time series.
@@ -13,23 +14,13 @@ def find_cfc(data,method_name,alpha=0.05,maxdelay=1,niter=50,thresh=0.25,isgauss
             'PC': PC Algorithm
             'GC': Granger Causality
         alpha: (float) Significance level
-
-    (Required args if method_name is 'PC':)
-        isgauss: (boolean) Arg for TPC and PC, not GC.
+        isgauss: (boolean) Arg used for method_name = 'PC', 'TPC'.
             True: Assume Gaussian Noise distribution, 
             False: Distribution free.
-
-    (Required args if method_name is 'GC':)
-        maxdelay: (int) Maximum time-delay of interactions.
-    
-    (Required args if method_name is 'TPC':)
-        maxdelay: (int) Maximum time-delay of interactions. Arg for TPC and GC, not PC.
-        isgauss: (boolean) Arg for TPC and PC, not GC.
-            True: Assume Gaussian Noise distribution, 
-            False: Distribution free.
-        subsampsize: (int) Bootstrap window width in TPC.
-        niter: (int) Number of bootstrap iterations in TPC
-        thresh: (float) Bootstrap stability cut-off in TPC
+        maxdelay: (int) Maximum time-delay of interactions. Arg used for method_name = 'GC', 'TPC'.
+        subsampsize: (int) Bootstrap window width in TPC. Arg used for method_name = 'TPC'.
+        niter: (int) Number of bootstrap iterations in TPC. Arg used for method_name = 'TPC'.
+        thresh: (float) Bootstrap stability cut-off in TPC. Arg used for method_name = 'TPC'.
 
     Returns:
         adjacency: (numpy.array) Adcajency matrix of estimated CFC by chosen method.

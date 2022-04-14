@@ -1,10 +1,4 @@
-"""A graph generator based on the PC algorithm [Kalisch2007].
-
-[Kalisch2007] Markus Kalisch and Peter Bhlmann. Estimating
-high-dimensional directed acyclic graphs with the pc-algorithm. In The
-Journal of Machine Learning Research, Vol. 8, pp. 613-636, 2007.
-
-via https://github.com/keiichishima/pcalg
+"""A graph generator based on the PC algorithm [Kalisch2007] via https://github.com/keiichishima/pcalg
 """
 
 from itertools import combinations, permutations
@@ -120,8 +114,7 @@ def estimate_skeleton(indep_test_func, data_matrix, alpha, **kwargs):
     return (g, sep_set)
 
 def estimate_cpdag(skel_graph, sep_set):
-    """Estimate a CPDAG from the skeleton graph and separation sets
-    returned by the estimate_skeleton() function.
+    """Estimate a CPDAG from the skeleton graph and separation sets returned by the estimate_skeleton() function.
 
     Args:
         skel_graph: A skeleton graph (an undirected networkx.Graph).

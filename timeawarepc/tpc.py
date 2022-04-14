@@ -1,9 +1,4 @@
-"""Implements the Time-Aware PC (TPC) Algorithm for finding 
-Causal Functional Connectivity from Time Series.
-
-Biswas, R., & Shlizerman, E. (2022). Statistical Perspective on 
-Functional and Causal Neural Connectomics: The Time-Aware PC Algorithm. 
-https://arxiv.org/abs/2204.04845
+"""Implements the Time-Aware PC (TPC) Algorithm for finding Causal Functional Connectivity from Time Series [BiswasShlizerman2022].
 """
 import time
 import numpy as np
@@ -35,8 +30,7 @@ def cfc_tpc(data,maxdelay=1,subsampsize=50,niter=25,alpha=0.1,thresh=0.25,isgaus
             False: Distribution-free.
 
     Returns:
-        adjacency: (numpy.array) Adcajency matrix of shape (p,p) 
-                    for estimated CFC by TPC Algorithm.
+        adjacency: (numpy.array) Adcajency matrix of shape (p,p) for estimated CFC by TPC Algorithm.
         weights: (numpy.array) Connectivity Weight matrix of shape (p,p).
     """
     C_iter=[]
