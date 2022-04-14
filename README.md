@@ -10,7 +10,8 @@ Python library for finding the causal functional connectivity from time series d
 - [Overview](#overview)
 - [Installation](#installation)
 - [Requirements](#requirements)
-- [Tutorial](#tutorial)<!-- - [Documentation](#documentation) -->
+- [Tutorial](#tutorial)
+- [Documentation](#documentation)
 - [Contributing](#contributing)
 - [Citation](#citation)
 - [References](#references)
@@ -41,8 +42,14 @@ BiocManager::install("RBGL")
 install.packages("pcalg")
 install.packages("kpcalg")
 ```
+- In addition, if you like to use Granger Causality functions in this package, please separately install nitime as follows:
+```
+pip install nitime
+```
 
+## Documentation
 
+[Documentation is available at readthedocs.org](https://timeawarepc.readthedocs.io/en/latest/)
 
 ## Tutorial
 
