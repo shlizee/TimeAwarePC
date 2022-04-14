@@ -8,7 +8,8 @@ Typical use case:
 - **Neural Connectomics**: The representation of the flow of information between neurons in the brain based on their activity is termed the causal functional connectome. The causal functional connectome is not directly observed and needs to be inferred from neural time series. The model outcome of TPC reflects causality of neural interactions such as being non-parametric, exhibits the directed Markov property in a time-series setting, and is predictive of the consequence of counterfactual interventions on the time series.
 
 .. image:: Schematic.png
-   :width: 500
+    :align: center
+    :width: 500
 
 The package currently supports the following methods:
 
