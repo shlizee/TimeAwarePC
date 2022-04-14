@@ -1,6 +1,6 @@
 """Convenient wrapper for functions in the library.
 """
-from tpc import *
+from timeawarepc.tpc import *
 def find_cfc(data,method_name,alpha=0.05,maxdelay=1,niter=50,thresh=0.25,isgauss=False):
     """Estimate Causal Functional Connectivity (CFC) between nodes from time series.
         This is a wrapper for functions cfc_tpc, cfc_pc, cfc_gc in tpc.py.

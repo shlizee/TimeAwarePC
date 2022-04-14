@@ -19,7 +19,7 @@ import re
 import nitime.analysis as nta
 import nitime.timeseries as ts
 import numpy as np
-from pcalg import *
+from timeawarepc.pcalg import *
 import warnings
 #%%
 def cfc_tpc(data,maxdelay=1,subsampsize=50,niter=25,alpha=0.1,thresh=0.25,isgauss=False):

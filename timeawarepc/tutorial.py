@@ -7,9 +7,9 @@ import networkx as nx
 import numpy as np
 from numpy.random import default_rng
 rng = default_rng(seed=111)
-from tpc import cfc_tpc, cfc_pc, cfc_gc
-from simulate_data import *
-from find_cfc import *
+from timeawarepc.tpc import cfc_tpc, cfc_pc, cfc_gc
+from timeawarepc.simulate_data import *
+from timeawarepc.find_cfc import *
 #%%
 # Simulate a dataset. 
 # Specify a data generating model: model = "lingauss" for Linear Gaussian VAR, "nonlinnongauss" for Non-Linear Non-Gaussian VAR, "ctrnn" for Continuous Time Recurrent Neural Network.

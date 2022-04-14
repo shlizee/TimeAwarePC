@@ -11,7 +11,7 @@ from itertools import combinations, permutations
 import logging
 import numpy as np
 import networkx as nx
-from pcalg_helpers import *
+from timeawarepc.pcalg_helpers import *
 
 _logger = logging.getLogger(__name__)
 
