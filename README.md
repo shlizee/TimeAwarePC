@@ -33,7 +33,7 @@ pip install .
 - Python >=3.6
 - Python packages in requirements.txt, automatically installed as part of the setup.
 - R >=4.0
-- R package kpcalg and its dependencies. They can be installed in R as follows:
+- R package kpcalg and its dependencies. They can be installed in R or RStudio as follows:
 ```
 install.packages("BiocManager")
 BiocManager::install("graph")
