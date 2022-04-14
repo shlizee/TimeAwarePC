@@ -1,11 +1,17 @@
-name: rpy2-environment
+name: timeawarepc-environment
 channels:
   - r
 
 dependencies:
-  - python>=3.7
+  - python=3.7
+  - sphinx_rtd_theme
+  - sphinxcontrib-bibtex
   - numpy
   - pandas
+  - scipy
+  - networkx
+  - nitime
   - r
+  - rpy2
   - pip:
     - sphinx
