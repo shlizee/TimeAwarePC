@@ -10,8 +10,7 @@ Python library for finding the causal functional connectivity from time series d
 - [Overview](#overview)
 - [Installation](#installation)
 - [Requirements](#requirements)
-- [Tutorial](#tutorial)
-<!-- - [Documentation](#documentation) -->
+- [Tutorial](#tutorial)<!-- - [Documentation](#documentation) -->
 - [Contributing](#contributing)
 - [Citation](#citation)
 - [References](#references)
@@ -31,8 +30,8 @@ pip install .
 ```
 
 ## Requirements
-- Python >=3.7
-- You can install required Python packages in requirements_py.txt as follows:
+- Python >=3.6
+- You can install required Python packages in requirements.txt as follows:
 ```
 pip install -r requirements.txt
 ```

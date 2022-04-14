@@ -9,7 +9,7 @@ setuptools.setup(
     # Needed to silence warnings (and to be a worthwhile package)
     name = 'timeawarepc',
     version = VERSION,
-    author = 'Rahul Biswas',
+    author = '',
     description = 'Time-Aware PC Python Package',
     long_description= README,
     long_description_content_type = 'text/markdown',
