@@ -16,7 +16,7 @@ TPC estimates the Causal Functional Connectivity (CFC) from time series observat
 PC Algorithm
 ------------
 
-PC is an algorithm for causal inference from static data, that is based on independent and identically distributed observations. :cite:`kalishbuhlmann`,:cite:`biswasshlizerman2022-2`.
+PC is an algorithm for causal inference from static data, that is based on independent and identically distributed observations. :cite:`kalishbuhlmann,biswasshlizerman2022-1`.
 
 .. image:: PC_Schematic.png
    :width: 500
@@ -25,7 +25,7 @@ PC is an algorithm for causal inference from static data, that is based on indep
 Granger Causality
 -----------------
 
-Granger causality (GC) is a statistical methodology for determining whether one time series is useful in predicting another :cite:`granger1969investigating`,:cite: `basu2015network`.
+Granger causality (GC) is a statistical methodology for determining whether one time series is useful in predicting another :cite:`granger1969investigating,basu2015network`.
 
 Comparison of Approaches
 ------------------------
