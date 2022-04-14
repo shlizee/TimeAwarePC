@@ -32,7 +32,7 @@ author = 'Rahul Biswas'
 # The full version, including alpha/beta/rc tags
 release = '2022'
 
-import timeawarepc
+#import timeawarepc
 import sphinx_rtd_theme
 
 # -- General configuration ---------------------------------------------------
