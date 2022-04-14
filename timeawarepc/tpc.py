@@ -14,6 +14,8 @@ import networkx as nx
 import re
 import numpy as np
 import warnings
+import logging
+_logger = logging.getLogger(__name__)
 #%%
 def cfc_tpc(data,maxdelay=1,subsampsize=50,niter=25,alpha=0.1,thresh=0.25,isgauss=False):
     """Estimate Causal Functional Connectivity using TPC Algorithm.
@@ -40,12 +42,12 @@ def cfc_tpc(data,maxdelay=1,subsampsize=50,niter=25,alpha=0.1,thresh=0.25,isgaus
     C_cf2_iter=[]
     start_time = time.time()
     data_trans = data_transformed(data, maxdelay)#Step 1: Time-Delayed Samples
-    print("Data transformed in "+str(time.time()-start_time))
+    _logger.debug("Data transformed in "+str(time.time()-start_time))
 
     #Steps 2-6a:
     for inneriter in range(niter):
         start_btrstrp = time.time()
-        print("Starting bootstrap "+str(inneriter))
+        _logger.debug("Starting bootstrap "+str(inneriter))
         n=data_trans.shape[0]
 
         #Step 2: Select random Bootstrap window
@@ -90,7 +92,7 @@ def cfc_tpc(data,maxdelay=1,subsampsize=50,niter=25,alpha=0.1,thresh=0.25,isgaus
         C_iter.append(A_rr)
         C_cf_iter.append(causaleffin)
         C_cf2_iter.append(causaleffin2)
-        print("Bootstrap done in "+str(time.time()-start_btrstrp))
+        _logger.debug("Bootstrap done in "+str(time.time()-start_btrstrp))
         #Step 6a: Repeat Steps 2-5    
 
     #Step 6b-c: Robust Edges and Connectivity Weights
@@ -98,7 +100,7 @@ def cfc_tpc(data,maxdelay=1,subsampsize=50,niter=25,alpha=0.1,thresh=0.25,isgaus
     with warnings.catch_warnings():
         warnings.simplefilter("ignore", category=RuntimeWarning)
         weights=np.nanmean(np.where(np.asarray(C_cf_iter)!=0,np.asarray(C_cf_iter),np.nan),axis=0)#Robust Connectivity Weights
-    print("CE shape "+str(weights.shape))
+    _logger.debug("CE shape "+str(weights.shape))
 
     #Step 8: Pruning
     adjacency[np.abs(weights) <= np.nanmax(np.abs(weights))/10]=0
