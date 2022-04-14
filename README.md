@@ -31,12 +31,9 @@ pip install .
 
 ## Requirements
 - Python >=3.6
-- You can install required Python packages in requirements.txt as follows:
-```
-pip install -r requirements.txt
-```
+- Python packages in requirements.txt. They will be automatically installed as part of the setup.
 - R >=4.0
-- You can install required R packages as follows:
+- R package kpcalg and its dependencies. They can be installed in R as follows:
 ```
 install.packages("BiocManager")
 BiocManager::install("graph")
