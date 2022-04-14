@@ -46,6 +46,9 @@ install.packages("kpcalg")
 pip install nitime
 ```
 
+## Documentation
+
+[Documentation is available at readthedocs.org](https://timeawarepc.readthedocs.io/en/latest/)
 
 ## Tutorial
 
