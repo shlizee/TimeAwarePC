@@ -12,8 +12,10 @@ Welcome to timeawarepc's documentation!
 
    source/intro
    source/gettingstarted
-   source/tutorial
-   source/
+   source/quickstartguide
+   source/timeawarepc
+   source/references
+   source/changelog
 
 
 
