@@ -1,11 +1,8 @@
 timeawarepc package
-================
+===================
 
 Submodules
 ----------
-
-timeawarepc
-------------------------------
 
 .. automodule:: timeawarepc
     :members:
