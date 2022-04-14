@@ -20,9 +20,12 @@ Load the packages
 
 Simulate a dataset
 ~~~~~~~~~~~~~~~~~~
-Specify a data generating model: model = "lingauss" for Linear Gaussian VAR, "nonlinnongauss" for Non-Linear Non-Gaussian VAR, "ctrnn" for Continuous Time Recurrent Neural Network.
+Specify a data generating model: 
+model = "lingauss" for Linear Gaussian VAR, "nonlinnongauss" for Non-Linear Non-Gaussian VAR, "ctrnn" for Continuous Time Recurrent Neural Network.
 T is the number of time recordings (default 1000), noise is the noise std. deviation (default 1). 
 Note that number of neurons = 4 and max delay of interaction = 1 indices are fixed in this tutorial.
+
+Simulate the dataset using simulate_data().
 
 .. code-block:: python
 
@@ -35,7 +38,7 @@ Note that number of neurons = 4 and max delay of interaction = 1 indices are fix
 
 Estimate CFC - quick way
 ~~~~~~~~~~~~~~~~~~~~~~~~
-We will use find_cfc(), a convenient wrapper around different methods in this library
+We will use find_cfc(), a convenient wrapper around different methods in this library.
 
 Specify a method_name. 'TPC' for Time-Aware PC Algorithm, 'PC' for PC Algorithm, 'GC' for Granger Causality.
 
