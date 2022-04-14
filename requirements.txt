@@ -3,4 +3,3 @@ pandas
 scipy
 networkx
 rpy2
-nitime

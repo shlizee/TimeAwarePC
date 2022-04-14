@@ -16,9 +16,9 @@ PC Algorithm
 
 PC is an algorithm for causal inference based on Directed Probabilistic Graphical Modeling (DPGM), which is suited for static data, i.e., independent and identically distributed observations. :cite:`kalishbuhlmann,biswasshlizerman2022-1`.
 
-.. image:: PC_Schematic.png
-   :align: center
-   :width: 500
+.. .. image:: PC_Schematic.png
+..    :align: center
+..    :width: 500
 
 
 Granger Causality

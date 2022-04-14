@@ -7,7 +7,7 @@ import networkx as nx
 import numpy as np
 from numpy.random import default_rng
 rng = default_rng(seed=111)
-from timeawarepc.tpc import cfc_tpc, cfc_pc, cfc_gc
+from timeawarepc.tpc import cfc_tpc, cfc_pc
 from timeawarepc.simulate_data import *
 from timeawarepc.find_cfc import *
 #%%
@@ -50,6 +50,7 @@ if method_name == 'TPC':
 elif method_name == 'PC':
     adjmat, causaleffmat = cfc_pc(data,alpha,isgauss=isgauss)
 elif method_name == 'GC':
+    from timeawarepc.gc import cfc_gc
     adjmat, causaleffmat = cfc_gc(data,maxdelay,alpha)
 #%%Compare the Ground Truth and Estimated CFC.
 print('Ground Truth CFC adjacency:')

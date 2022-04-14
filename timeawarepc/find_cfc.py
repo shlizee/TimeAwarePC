@@ -42,5 +42,6 @@ def find_cfc(data,method_name,alpha=0.05,maxdelay=1,niter=50,thresh=0.25,isgauss
     elif method_name == 'PC':
         adjacency, weights = cfc_pc(data,alpha,isgauss=isgauss)
     elif method_name == 'GC':
+        from timeawarepc.gc import cfc_gc 
         adjacency, weights = cfc_gc(data,maxdelay,alpha)
     return adjacency,weights

@@ -3,7 +3,7 @@ import setuptools
 with open('README.md','r') as fh:
     README = fh.read()
 
-VERSION = "0.0.1"
+VERSION = "0.1.2"
 
 setuptools.setup(
     # Needed to silence warnings (and to be a worthwhile package)
@@ -13,7 +13,7 @@ setuptools.setup(
     description = 'Time-Aware PC Python Package',
     long_description= README,
     long_description_content_type = 'text/markdown',
-    install_requires=['numpy','pandas','rpy2','networkx','scipy','nitime'],
+    install_requires=['numpy','pandas','rpy2','networkx','scipy'],
     url='https://github.com/shlizee/TimeAwarePC',
     packages=setuptools.find_packages(),
     python_requires='>=3.6',
