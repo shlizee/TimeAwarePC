@@ -2,7 +2,6 @@
 """
 import numpy as np
 import networkx as nx
-
 def data_transformed(data, maxdelay):
     """Implements Step 1 (Time Delay) of TPC, 
     to construct the data with time-delayed samples.
