@@ -11,9 +11,6 @@ TPC estimates the Causal Functional Connectivity (CFC) from time series observat
    :align: center
    :width: 500
 
-.. image:: TPC_algo.png
-   :width: 500
-
 PC Algorithm
 ------------
 
@@ -29,9 +26,8 @@ Granger Causality
 
 Granger causality (GC) is a statistical methodology for determining whether one time series is useful in predicting another :cite:`granger1969investigating,basu2015network,biswasshlizerman2022-1`.
 
-=====================================
-Comparison of Different Methodologies
-=====================================
+Comparison of Methodologies
+---------------------------
 .. image:: tablesummary.png
    :align: center
    :width: 500

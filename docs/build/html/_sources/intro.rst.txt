@@ -1,5 +1,5 @@
-About TimeAwarePC
-=================
+About
+=====
 
 ``TimeAwarePC`` is a Python package that implements the **Time-Aware PC** (TPC) algorithm for finding **Causal Functional Connectivity** (CFC) from time series observations. Essentially, it estimates the causal network between nodes of the time series and its connectivity weights, in a non-parametric manner, using recent developments in directed probabilistic graphical modeling for time series. The package also includes implementations of the PC algorithm and Granger Causality (GC) to estimate the CFC.
 
