@@ -1,5 +1,8 @@
-This software license is the 2-clause BSD license plus a third clause that prohibits redistribution 
-for commercial purposes without further permission.
+===============================
+The TimeAwarePC licensing terms
+===============================
+TimeAwarePC is licensed under the terms of the 2-clause BSD license plus a third clause that prohibits 
+redistribution for commercial purposes without further permission, as follows:
 
 Copyright (c) 2022, NeuroAI - Data-Driven Dynamical Systems Research Group. All rights reserved.
 
@@ -13,11 +16,11 @@ and the following disclaimer.
 conditions and the following disclaimer in the documentation and/or other materials provided 
 with the distribution.
 
-3. Redistributions for commercial purposes are not permitted without the Copyright holder's 
-written permission.
+3. Redistributions for commercial purposes are not permitted without NeuroAI - Data-Driven Dynamical 
+Systems Research Group's written permission.
 For purposes of this license, commercial purposes is the incorporation of the software into 
-anything for which you will charge fees or other compensation. Contact the Copyright holder for 
-commercial licensing opportunities.
+anything for which you will charge fees or other compensation. Contact the NeuroAI - Data-Driven 
+Dynamical Systems Research Group for commercial licensing opportunities.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS 
 OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY 
