@@ -10,17 +10,17 @@ def find_cfc(data,method_name,alpha=0.05,maxdelay=1,niter=50,thresh=0.25,isgauss
     Args:
         data: (numpy.array) of shape (n,p) with n time-recordings for p nodes
         method_name: (string)
-            'TPC': Implements TPC Algorithm
-            'PC': PC Algorithm
-            'GC': Granger Causality
+            'TPC': Implements TPC Algorithm,
+            'PC': PC Algorithm,
+            'GC': Granger Causality.
         alpha: (float) Significance level
-        isgauss: (boolean) Arg used for method_name = 'PC', 'TPC'.
+        isgauss: (boolean) Arg used for method_name == 'PC' or 'TPC'.
             True: Assume Gaussian Noise distribution, 
             False: Distribution free.
-        maxdelay: (int) Maximum time-delay of interactions. Arg used for method_name = 'GC', 'TPC'.
-        subsampsize: (int) Bootstrap window width in TPC. Arg used for method_name = 'TPC'.
-        niter: (int) Number of bootstrap iterations in TPC. Arg used for method_name = 'TPC'.
-        thresh: (float) Bootstrap stability cut-off in TPC. Arg used for method_name = 'TPC'.
+        maxdelay: (int) Maximum time-delay of interactions. Arg used for method_name == 'GC' or 'TPC'.
+        subsampsize: (int) Bootstrap window width in TPC. Arg used for method_name == 'TPC'.
+        niter: (int) Number of bootstrap iterations in TPC. Arg used for method_name == 'TPC'.
+        thresh: (float) Bootstrap stability cut-off in TPC. Arg used for method_name == 'TPC'.
 
     Returns:
         adjacency: (numpy.array) Adcajency matrix of estimated CFC by chosen method.

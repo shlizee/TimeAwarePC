@@ -32,7 +32,7 @@ author = 'Rahul Biswas'
 # The full version, including alpha/beta/rc tags
 release = '2022'
 
-#import timeawarepc
+import timeawarepc
 import sphinx_rtd_theme
 
 # -- General configuration ---------------------------------------------------
@@ -65,7 +65,7 @@ source_suffix = ".rst"
 # The master toctree document.
 master_doc = "index"
 
-version = "0.1.2" #timeawarepc.__version__
+version = timeawarepc.__version__
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -86,6 +86,7 @@ html_theme_options = {"logo_only": False, "display_version": True}
 html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
 html_logo = "_static/logo.png"
+html_favicon = "_static/favicon.png"
 
 # The name of an image file (within the static path) to use as favicon
 # of the docs.  This file should be a Windows icon file (.ico) being
