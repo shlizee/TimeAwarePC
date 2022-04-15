@@ -6,6 +6,7 @@
   <title>timeawarepc.find_cfc &mdash; timeawarepc 2022 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.png"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -85,17 +86,17 @@
 <span class="sd">    Args:</span>
 <span class="sd">        data: (numpy.array) of shape (n,p) with n time-recordings for p nodes</span>
 <span class="sd">        method_name: (string)</span>
-<span class="sd">            &#39;TPC&#39;: Implements TPC Algorithm</span>
-<span class="sd">            &#39;PC&#39;: PC Algorithm</span>
-<span class="sd">            &#39;GC&#39;: Granger Causality</span>
+<span class="sd">            &#39;TPC&#39;: Implements TPC Algorithm,</span>
+<span class="sd">            &#39;PC&#39;: PC Algorithm,</span>
+<span class="sd">            &#39;GC&#39;: Granger Causality.</span>
 <span class="sd">        alpha: (float) Significance level</span>
-<span class="sd">        isgauss: (boolean) Arg used for method_name = &#39;PC&#39;, &#39;TPC&#39;.</span>
+<span class="sd">        isgauss: (boolean) Arg used for method_name == &#39;PC&#39; or &#39;TPC&#39;.</span>
 <span class="sd">            True: Assume Gaussian Noise distribution, </span>
 <span class="sd">            False: Distribution free.</span>
-<span class="sd">        maxdelay: (int) Maximum time-delay of interactions. Arg used for method_name = &#39;GC&#39;, &#39;TPC&#39;.</span>
-<span class="sd">        subsampsize: (int) Bootstrap window width in TPC. Arg used for method_name = &#39;TPC&#39;.</span>
-<span class="sd">        niter: (int) Number of bootstrap iterations in TPC. Arg used for method_name = &#39;TPC&#39;.</span>
-<span class="sd">        thresh: (float) Bootstrap stability cut-off in TPC. Arg used for method_name = &#39;TPC&#39;.</span>
+<span class="sd">        maxdelay: (int) Maximum time-delay of interactions. Arg used for method_name == &#39;GC&#39; or &#39;TPC&#39;.</span>
+<span class="sd">        subsampsize: (int) Bootstrap window width in TPC. Arg used for method_name == &#39;TPC&#39;.</span>
+<span class="sd">        niter: (int) Number of bootstrap iterations in TPC. Arg used for method_name == &#39;TPC&#39;.</span>
+<span class="sd">        thresh: (float) Bootstrap stability cut-off in TPC. Arg used for method_name == &#39;TPC&#39;.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        adjacency: (numpy.array) Adcajency matrix of estimated CFC by chosen method.</span>

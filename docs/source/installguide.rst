@@ -21,12 +21,10 @@ Install ``timeawarepc`` using ``pip``
 
 .. code-block:: bash
 
-	$ git clone -b main https://github.com/shlizee/TimeAwarePC.git
-	$ cd TimeAwarePC
-	$ pip install .
+	$ pip install timeawarepc
  
 To install ``timeawarepc`` with ``nitime`` also:
 
- .. code-block:: bash
+.. code-block:: bash
 
- 	$ pip install nitime
+	$ pip install nitime

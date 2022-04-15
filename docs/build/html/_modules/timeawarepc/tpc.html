@@ -6,6 +6,7 @@
   <title>timeawarepc.tpc &mdash; timeawarepc 2022 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="../../_static/favicon.png"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -89,6 +90,8 @@
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 <span class="c1">#%%</span>
 <div class="viewcode-block" id="cfc_tpc"><a class="viewcode-back" href="../../timeawarepc.html#timeawarepc.tpc.cfc_tpc">[docs]</a><span class="k">def</span> <span class="nf">cfc_tpc</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">maxdelay</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">subsampsize</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span><span class="n">niter</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">thresh</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span><span class="n">isgauss</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Estimate Causal Functional Connectivity using TPC Algorithm.</span>
@@ -115,12 +118,12 @@
     <span class="n">C_cf2_iter</span><span class="o">=</span><span class="p">[]</span>
     <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
     <span class="n">data_trans</span> <span class="o">=</span> <span class="n">data_transformed</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">maxdelay</span><span class="p">)</span><span class="c1">#Step 1: Time-Delayed Samples</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Data transformed in &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start_time</span><span class="p">))</span>
+    <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Data transformed in &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start_time</span><span class="p">))</span>
 
     <span class="c1">#Steps 2-6a:</span>
     <span class="k">for</span> <span class="n">inneriter</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">niter</span><span class="p">):</span>
         <span class="n">start_btrstrp</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Starting bootstrap &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">inneriter</span><span class="p">))</span>
+        <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Starting bootstrap &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">inneriter</span><span class="p">))</span>
         <span class="n">n</span><span class="o">=</span><span class="n">data_trans</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
         <span class="c1">#Step 2: Select random Bootstrap window</span>
@@ -165,7 +168,7 @@
         <span class="n">C_iter</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">A_rr</span><span class="p">)</span>
         <span class="n">C_cf_iter</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">causaleffin</span><span class="p">)</span>
         <span class="n">C_cf2_iter</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">causaleffin2</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bootstrap done in &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start_btrstrp</span><span class="p">))</span>
+        <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Bootstrap done in &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">start_btrstrp</span><span class="p">))</span>
         <span class="c1">#Step 6a: Repeat Steps 2-5    </span>
 
     <span class="c1">#Step 6b-c: Robust Edges and Connectivity Weights</span>
@@ -173,7 +176,7 @@
     <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
         <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">RuntimeWarning</span><span class="p">)</span>
         <span class="n">weights</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">C_cf_iter</span><span class="p">)</span><span class="o">!=</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">C_cf_iter</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="c1">#Robust Connectivity Weights</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CE shape &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">weights</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+    <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;CE shape &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">weights</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
 
     <span class="c1">#Step 8: Pruning</span>
     <span class="n">adjacency</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">weights</span><span class="p">))</span><span class="o">/</span><span class="mi">10</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>

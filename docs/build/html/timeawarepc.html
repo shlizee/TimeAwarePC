@@ -32,7 +32,7 @@
             <img src="_static/logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.1.2
+                0.0.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -107,17 +107,17 @@ Refer to the individual functions for their details.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> – (numpy.array) of shape (n,p) with n time-recordings for p nodes</p></li>
 <li><p><strong>method_name</strong> – (string)
-‘TPC’: Implements TPC Algorithm
-‘PC’: PC Algorithm
-‘GC’: Granger Causality</p></li>
+‘TPC’: Implements TPC Algorithm,
+‘PC’: PC Algorithm,
+‘GC’: Granger Causality.</p></li>
 <li><p><strong>alpha</strong> – (float) Significance level</p></li>
-<li><p><strong>isgauss</strong> – (boolean) Arg used for method_name = ‘PC’, ‘TPC’.
+<li><p><strong>isgauss</strong> – (boolean) Arg used for method_name == ‘PC’ or ‘TPC’.
 True: Assume Gaussian Noise distribution,
 False: Distribution free.</p></li>
-<li><p><strong>maxdelay</strong> – (int) Maximum time-delay of interactions. Arg used for method_name = ‘GC’, ‘TPC’.</p></li>
-<li><p><strong>subsampsize</strong> – (int) Bootstrap window width in TPC. Arg used for method_name = ‘TPC’.</p></li>
-<li><p><strong>niter</strong> – (int) Number of bootstrap iterations in TPC. Arg used for method_name = ‘TPC’.</p></li>
-<li><p><strong>thresh</strong> – (float) Bootstrap stability cut-off in TPC. Arg used for method_name = ‘TPC’.</p></li>
+<li><p><strong>maxdelay</strong> – (int) Maximum time-delay of interactions. Arg used for method_name == ‘GC’ or ‘TPC’.</p></li>
+<li><p><strong>subsampsize</strong> – (int) Bootstrap window width in TPC. Arg used for method_name == ‘TPC’.</p></li>
+<li><p><strong>niter</strong> – (int) Number of bootstrap iterations in TPC. Arg used for method_name == ‘TPC’.</p></li>
+<li><p><strong>thresh</strong> – (float) Bootstrap stability cut-off in TPC. Arg used for method_name == ‘TPC’.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
