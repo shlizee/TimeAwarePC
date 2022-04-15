@@ -3,7 +3,7 @@ import setuptools
 with open('README.md','r') as fh:
     README = fh.read()
 
-VERSION = "0.1.2"
+VERSION = "1.0.0"
 
 setuptools.setup(
     # Needed to silence warnings (and to be a worthwhile package)
@@ -19,7 +19,6 @@ setuptools.setup(
     python_requires='>=3.6',
     classifiers=[
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: To Be Decided",
         "Operating System :: OS Independent",
     ],
 )
