@@ -1,2 +1,2 @@
-dist/
-timeawarepc.egg-info/
+dist/*
+timeawarepc.egg-info/*
