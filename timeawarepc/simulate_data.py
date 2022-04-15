@@ -56,7 +56,7 @@ def simulate_data(model, T = 1000, noise = 1):
         n_ctrnn=T
         tau=10
         smspikes=simulate_ctrnn(n_ctrnn,p,w,tau,noise)
-        CFCtruth[0,2]=CFCtruth[1,2]=CFCtruth[2,3]=CFCtruth[1,1]=CFCtruth[2,2]=CFCtruth[3,3]=1
+        CFCtruth[0,2]=CFCtruth[1,2]=CFCtruth[2,3]=CFCtruth[0,0]=CFCtruth[1,1]=CFCtruth[2,2]=CFCtruth[3,3]=1
     data = smspikes.T
     return data,CFCtruth
 
