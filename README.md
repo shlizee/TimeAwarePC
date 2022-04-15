@@ -19,11 +19,11 @@ $ pip install timeawarepc
 - R >=4.0
 - R package ```kpcalg``` and its dependencies. They can be installed in R or RStudio as follows:
 ```
-install.packages("BiocManager")
-BiocManager::install("graph")
-BiocManager::install("RBGL")
-install.packages("pcalg")
-install.packages("kpcalg")
+> install.packages("BiocManager")
+> BiocManager::install("graph")
+> BiocManager::install("RBGL")
+> install.packages("pcalg")
+> install.packages("kpcalg")
 ```
 <!-- - In addition, if you like to use Granger Causality functions in this package, please separately install nitime as follows:
 ```
