@@ -36,7 +36,7 @@ pip install nitime
 
 ## Tutorial
 
-See the [tutorial.py](https://github.com/shlizee/TimeAwarePC/blob/main/timeawarepc/tutorial.py) for a quick tutorial of the main functionalities of this library and check if it is installed properly. 
+See the [Quick Start Guide](https://timeawarepc.readthedocs.io/en/latest/gettingstarted.html) for a quick tutorial of the main functionalities of this library and check if it is installed properly. 
 <!-- 
 ## Documentation
 
