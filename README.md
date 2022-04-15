@@ -1,4 +1,4 @@
-# Time Aware PC  [![Documentation Status](https://readthedocs.org/projects/timeawarepc/badge/?version=latest)](https://timeawarepc.readthedocs.io/en/latest/?badge=latest)
+# Time-Aware PC  [![Documentation Status](https://readthedocs.org/projects/timeawarepc/badge/?version=latest)](https://timeawarepc.readthedocs.io/en/latest/?badge=latest)
 Python library for finding the causal functional connectivity from time series data.
 
 <p align="center">
@@ -18,7 +18,7 @@ Python library for finding the causal functional connectivity from time series d
 
 ## Overview
 
-This library implements the Time Aware PC algorithm to find the causal functional connectivity from time series data, which is based on recent developments in directed probabilistic graphical modeling of causal interactions in neural time series. The library also includes implementations of Granger Causality and the PC algorithm.
+This library implements the Time-Aware PC algorithm to find the causal functional connectivity from time series data, which is based on recent developments in directed probabilistic graphical modeling of causal interactions in neural time series. The library also includes implementations of Granger Causality and the PC algorithm.
 
 ## Installation
 
@@ -38,7 +38,7 @@ pip install nitime
 
 ## Requirements
 - Python >=3.6
-- Python packages automatically checked and installed as part of the setup. To use Granger Causality additional dependency of ```nitime``` is required.
+- Python packages automatically checked and installed as part of the setup. To use Granger Causality, additional dependency of ```nitime```.
 - R >=4.0
 - R package kpcalg and its dependencies. They can be installed in R or RStudio as follows:
 ```
