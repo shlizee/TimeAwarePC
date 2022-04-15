@@ -1,5 +1,5 @@
 # Time-Aware PC  [![Documentation Status](https://readthedocs.org/projects/timeawarepc/badge/?version=latest)](https://timeawarepc.readthedocs.io/en/latest/?badge=latest)
-Python library for finding the causal functional connectivity from time series data.
+Python library for finding the **Causal Functional Connectivity** from time series data.
 
 <p align="center">
 <img src="/imgs/Schematic.png" align="middle" width="500" height="250"/>
