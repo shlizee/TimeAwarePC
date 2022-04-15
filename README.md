@@ -1,5 +1,5 @@
 # TimeAwarePC: A Python Package for Finding Causal Connectivity from Time Series Data  [![Documentation Status](https://readthedocs.org/projects/timeawarepc/badge/?version=latest)](https://timeawarepc.readthedocs.io/en/latest/?badge=latest)
-**TimeAwarePC** is a Python package that provides code to implement the Time-Aware PC Algorithm for finding the **Causal Functional Connectivity** from time series data. Time-Aware PC is based on recent research in directed probabilistic graphical modeling with time series [[1]](#References). The package also includes implementations of Granger Causality and the PC algorithm.
+**TimeAwarePC** is a Python package that provides code to implement the Time-Aware PC Algorithm for finding the **Causal Functional Connectivity** from time series data. This is based on recent research in directed probabilistic graphical modeling with time series [[1]](#References). The package also includes implementations of Granger Causality and the PC algorithm.
 
 <p align="center">
 <img src="/imgs/Schematic.png" align="middle" width="500" height="250"/>
