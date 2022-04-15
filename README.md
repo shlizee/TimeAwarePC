@@ -10,7 +10,7 @@
 You can get the latest version of Time-Aware PC as follows.
 
 ```
-pip install timeawarepc
+$ pip install timeawarepc
 ```
 
 ## Requirements
