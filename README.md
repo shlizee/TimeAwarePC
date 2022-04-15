@@ -7,12 +7,10 @@
 
 ## Installation
 
-You can get the latest version of Time-Aware PC by cloning the repository:
+You can get the latest version of Time-Aware PC as follows:
 
 ```
-git clone -b main https://github.com/shlizee/TimeAwarePC.git
-cd TimeAwarePC
-pip install .
+pip install timeawarepc
 ```
 
 ## Requirements
