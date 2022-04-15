@@ -1,4 +1,4 @@
-# Time-Aware PC  [![Documentation Status](https://readthedocs.org/projects/timeawarepc/badge/?version=latest)](https://timeawarepc.readthedocs.io/en/latest/?badge=latest)
+# Time-Aware PC: Causal Connectivity from Time Series  [![Documentation Status](https://readthedocs.org/projects/timeawarepc/badge/?version=latest)](https://timeawarepc.readthedocs.io/en/latest/?badge=latest)
 Python library for finding the **Causal Functional Connectivity** from time series data.
 
 <p align="center">
