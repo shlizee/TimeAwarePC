@@ -7,7 +7,7 @@
 
 ## Installation
 
-You can get the latest version of Time-Aware PC as follows:
+You can get the latest version of Time-Aware PC as follows.
 
 ```
 pip install timeawarepc
