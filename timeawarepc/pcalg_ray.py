@@ -374,7 +374,7 @@ def ci_test_gauss_btp(data,A,B,S,**kwargs):
     return pval
 def hsic_condind(data,A,B,S,**kwargs):
     import pandas as pd
-    from hsiccondTestIC import hsic_CI
+    from timeawarepc.hsiccondTestIC import hsic_CI
     #from pcalg import estimate_skeleton, estimate_cpdag, causaleff_ida, ci_test_gauss
     if len(S) == 0:
         X=data[:,A]
