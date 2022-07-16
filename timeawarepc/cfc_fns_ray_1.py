@@ -1,5 +1,5 @@
 def val_pc_gauss(data_trans,alpha):
-    from timeawarepc.pcalg_ray import estimate_skeleton, estimate_cpdag, causaleff_ida, ci_test_gauss
+    from timeawarepc.pcalg_ray_1 import estimate_skeleton, estimate_cpdag, causaleff_ida, ci_test_gauss
     import networkx as nx
     (g, sep_set) = estimate_skeleton(indep_test_func=ci_test_gauss,
                                         data_matrix=data_trans,
@@ -10,7 +10,7 @@ def val_pc_gauss(data_trans,alpha):
     causaleff = causaleff_ida(g,data_trans)
     return val_matrix, causaleff
 def val_pc_hsic_btp(data_trans,alpha):
-    from timeawarepc.pcalg_ray import estimate_skeleton, estimate_cpdag, hsic_condind, causaleff_ida, ci_test_gauss
+    from timeawarepc.pcalg_ray_1 import estimate_skeleton, estimate_cpdag, hsic_condind, causaleff_ida, ci_test_gauss
     import networkx as nx
     (g, sep_set) = estimate_skeleton(indep_test_func=hsic_condind,
                                         data_matrix=data_trans,
@@ -21,7 +21,7 @@ def val_pc_hsic_btp(data_trans,alpha):
     causaleff = causaleff_ida(g,data_trans)
     return val_matrix, causaleff
 def val_pc_hsic(data_trans,alpha):
-    from timeawarepc.pcalg_ray import estimate_skeleton, estimate_cpdag, causaleff_ida, ci_test_gauss
+    from timeawarepc.pcalg_ray_1 import estimate_skeleton, estimate_cpdag, causaleff_ida, ci_test_gauss
     import rpy2.robjects as robjects
     from rpy2.robjects.packages import importr
     import rpy2.rlike.container as rlc
@@ -56,7 +56,7 @@ def val_pc_hsic(data_trans,alpha):
     return val_matrix, causaleff
 
 def val_pc_gauss_btp(data_trans,alpha):
-    from timeawarepc.pcalg_ray import estimate_skeleton, estimate_cpdag, causaleff_ida, ci_test_gauss, ci_test_gauss_btp
+    from timeawarepc.pcalg_ray_1 import estimate_skeleton, estimate_cpdag, causaleff_ida, ci_test_gauss, ci_test_gauss_btp
     import networkx as nx
     (g, sep_set) = estimate_skeleton(indep_test_func=ci_test_gauss_btp,
                                         data_matrix=data_trans,
@@ -100,7 +100,7 @@ def val_neuropc_lin(data,lag=1,subsampsize=50,n_iter=1,alpha=0.3,thresh=0.25,v2=
     import time
     import numpy as np
     import pandas as pd
-    from timeawarepc.pcalg_ray import data_transformed, data_transformed_overlapping, causaleff_ida, return_finaledges, estimate_cpdag, estimate_skeleton,ci_test_gauss, orient
+    from timeawarepc.pcalg_ray_1 import data_transformed, data_transformed_overlapping, causaleff_ida, return_finaledges, estimate_cpdag, estimate_skeleton,ci_test_gauss, orient
     #import rpy2.robjects as robjects
     #from rpy2.robjects.packages import importr
     #import rpy2.rlike.container as rlc
@@ -157,7 +157,7 @@ def val_tpc_sno(data,lag=1,alpha=0.1):
     import time
     import numpy as np
     import pandas as pd
-    from timeawarepc.pcalg_ray import data_transformed_overlapping,data_transformed,return_finaledges_v2 ,estimate_cpdag, estimate_skeleton, ci_test_gauss,causaleff_ida, return_finaledges
+    from timeawarepc.pcalg_ray_1 import data_transformed_overlapping,data_transformed,return_finaledges_v2 ,estimate_cpdag, estimate_skeleton, ci_test_gauss,causaleff_ida, return_finaledges
     import random
     import networkx as nx
     start_time = time.time()
@@ -177,7 +177,7 @@ def val_tpc_sno_hsic_btp(data,lag=1,alpha=0.1):
     import time
     import numpy as np
     import pandas as pd
-    from timeawarepc.pcalg_ray import data_transformed_overlapping,hsic_condind,data_transformed,return_finaledges_v2 ,estimate_cpdag, estimate_skeleton, ci_test_gauss,causaleff_ida, return_finaledges
+    from timeawarepc.pcalg_ray_1 import data_transformed_overlapping,hsic_condind,data_transformed,return_finaledges_v2 ,estimate_cpdag, estimate_skeleton, ci_test_gauss,causaleff_ida, return_finaledges
     import random
     import networkx as nx
     start_time = time.time()
@@ -197,7 +197,7 @@ def val_tpc_sno_hsic(data,lag=1,alpha=0.1):
     import time
     import numpy as np
     import pandas as pd
-    from timeawarepc.pcalg_ray import data_transformed_overlapping,data_transformed,return_finaledges_v2 ,estimate_cpdag, estimate_skeleton, ci_test_gauss,causaleff_ida, return_finaledges
+    from timeawarepc.pcalg_ray_1 import data_transformed_overlapping,data_transformed,return_finaledges_v2 ,estimate_cpdag, estimate_skeleton, ci_test_gauss,causaleff_ida, return_finaledges
     import random
     import rpy2.robjects as robjects
     from rpy2.robjects.packages import importr
@@ -238,7 +238,7 @@ def val_tpc_sno_btp(data,lag=1,alpha=0.1):
     import time
     import numpy as np
     import pandas as pd
-    from timeawarepc.pcalg_ray import data_transformed_overlapping,data_transformed,return_finaledges_v2 ,estimate_cpdag, estimate_skeleton, ci_test_gauss,causaleff_ida, return_finaledges, ci_test_gauss_btp
+    from timeawarepc.pcalg_ray_1 import data_transformed_overlapping,data_transformed,return_finaledges_v2 ,estimate_cpdag, estimate_skeleton, ci_test_gauss,causaleff_ida, return_finaledges, ci_test_gauss_btp
     import random
     import networkx as nx
     start_time = time.time()
@@ -258,7 +258,7 @@ def val_tpc_sno_btstrp(data,lag=1,alpha=0.1):
     import time
     import numpy as np
     import pandas as pd
-    from timeawarepc.pcalg_ray import data_transformed_btstrp,data_transformed,return_finaledges_v2 ,estimate_cpdag, estimate_skeleton, ci_test_gauss,causaleff_ida, return_finaledges
+    from timeawarepc.pcalg_ray_1 import data_transformed_btstrp,data_transformed,return_finaledges_v2 ,estimate_cpdag, estimate_skeleton, ci_test_gauss,causaleff_ida, return_finaledges
     import random
     import networkx as nx
     start_time = time.time()
@@ -279,7 +279,7 @@ def val_tpc_s(data,lag=1,alpha=0.1):
     import time
     import numpy as np
     import pandas as pd
-    from timeawarepc.pcalg_ray import data_transformed_overlapping,data_transformed,return_finaledges_v2 ,estimate_cpdag, estimate_skeleton, ci_test_gauss,causaleff_ida, return_finaledges
+    from timeawarepc.pcalg_ray_1 import data_transformed_overlapping,data_transformed,return_finaledges_v2 ,estimate_cpdag, estimate_skeleton, ci_test_gauss,causaleff_ida, return_finaledges
     import random
     import networkx as nx
     start_time = time.time()
@@ -298,7 +298,7 @@ def val_tpc_ns(data,lag=1,subsampsize=50,n_iter=50,alpha=0.3,thresh=0.25):
     import time
     import numpy as np
     import pandas as pd
-    from timeawarepc.pcalg_ray import data_transformed,estimate_skeleton,return_finaledges_v2,estimate_cpdag,ci_test_gauss,data_transformed_overlapping, causaleff_ida, return_finaledges, orient
+    from timeawarepc.pcalg_ray_1 import data_transformed,estimate_skeleton,return_finaledges_v2,estimate_cpdag,ci_test_gauss,data_transformed_overlapping, causaleff_ida, return_finaledges, orient
     import rpy2.robjects as robjects
     from rpy2.robjects.packages import importr
     import rpy2.rlike.container as rlc
@@ -351,7 +351,7 @@ def val_tpc_ns_hsic_btp(data,lag=1,subsampsize=50,n_iter=50,alpha=0.3,thresh=0.2
     import time
     import numpy as np
     import pandas as pd
-    from timeawarepc.pcalg_ray import data_transformed,hsic_condind,estimate_skeleton,return_finaledges_v2,estimate_cpdag,ci_test_gauss,data_transformed_overlapping, causaleff_ida, return_finaledges, orient
+    from timeawarepc.pcalg_ray_1 import data_transformed,hsic_condind,estimate_skeleton,return_finaledges_v2,estimate_cpdag,ci_test_gauss,data_transformed_overlapping, causaleff_ida, return_finaledges, orient
     import rpy2.robjects as robjects
     from rpy2.robjects.packages import importr
     import rpy2.rlike.container as rlc
@@ -404,7 +404,7 @@ def val_tpc_ns_hsic(data,lag=1,subsampsize=50,n_iter=50,alpha=0.3,thresh=0.25):
     import time
     import numpy as np
     import pandas as pd
-    from timeawarepc.pcalg_ray import data_transformed,estimate_skeleton,return_finaledges_v2,estimate_cpdag,ci_test_gauss,data_transformed_overlapping, causaleff_ida, return_finaledges, orient
+    from timeawarepc.pcalg_ray_1 import data_transformed,estimate_skeleton,return_finaledges_v2,estimate_cpdag,ci_test_gauss,data_transformed_overlapping, causaleff_ida, return_finaledges, orient
     import rpy2.robjects as robjects
     from rpy2.robjects.packages import importr
     import rpy2.rlike.container as rlc
@@ -457,7 +457,7 @@ def val_tpc_ns_btp(data,lag=1,subsampsize=50,n_iter=50,alpha=0.3,thresh=0.25):
     import time
     import numpy as np
     import pandas as pd
-    from timeawarepc.pcalg_ray import data_transformed,estimate_skeleton,return_finaledges_v2,estimate_cpdag,ci_test_gauss,data_transformed_overlapping, causaleff_ida, return_finaledges, orient,ci_test_gauss_btp
+    from timeawarepc.pcalg_ray_1 import data_transformed,estimate_skeleton,return_finaledges_v2,estimate_cpdag,ci_test_gauss,data_transformed_overlapping, causaleff_ida, return_finaledges, orient,ci_test_gauss_btp
     import rpy2.robjects as robjects
     from rpy2.robjects.packages import importr
     import rpy2.rlike.container as rlc
@@ -510,7 +510,7 @@ def val_neuropc(data,lag=1,subsampsize=50,n_iter=1,alpha=0.3,thresh=0.25,v2=Fals
     import time
     import numpy as np
     import pandas as pd
-    from timeawarepc.pcalg_ray import data_transformed,data_transformed_overlapping, causaleff_ida, return_finaledges, orient
+    from timeawarepc.pcalg_ray_1 import data_transformed,data_transformed_overlapping, causaleff_ida, return_finaledges, orient
     import rpy2.robjects as robjects
     from rpy2.robjects.packages import importr
     import rpy2.rlike.container as rlc
