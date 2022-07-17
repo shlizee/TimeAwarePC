@@ -364,7 +364,7 @@ def ci_test_gauss_btp(data,A,B,S,**kwargs):
         #idx=0
         bs = bootstrap.StationaryBootstrap(np.median(band.iloc[:,0]),data)
         btpobj = np.asarray([x[0][0] for x in bs.bootstrap(nbtp)])
-        Tbtp = pool.map(partial(btpiter.remote,btpobj=btpobj,A=A,B=B,S=S),range(nbtp))
+        Tbtp = pool.map(partial(btpiter,btpobj=btpobj,A=A,B=B,S=S),range(nbtp))
         pval = np.sum(Tbtp>2*T)/nbtp
         #print(pval)
     return pval
