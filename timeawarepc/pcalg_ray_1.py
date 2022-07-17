@@ -9,11 +9,12 @@ Journal of Machine Learning Research, Vol. 8, pp. 613-636, 2007.
 
 License: BSD
 """
+from __future__ import print_function
+
 import ray
 #ray.init(address="auto")
 from ray.util.multiprocessing import Pool
 pool = Pool()
-from __future__ import print_function
 
 from itertools import combinations, permutations
 import logging
@@ -366,7 +367,8 @@ def ci_test_gauss_btp(data,A,B,S,**kwargs):
         #idx=0
         bs = bootstrap.StationaryBootstrap(np.median(band.iloc[:,0]),data)
         btpobj = np.asarray([x[0][0] for x in bs.bootstrap(nbtp)])
-        Tbtp = ray.get([btpiter.remote(btpobj=btpobj,A=A,B=B,S=S) for _ in range(nbtp)])
+        btpobj_id = ray.put(btpobj)
+        Tbtp = ray.get([btpiter.remote(btpobj=btpobj_id,A=A,B=B,S=S) for _ in range(nbtp)])
         pval = np.sum(Tbtp>2*T)/nbtp
         #print(pval)
     return pval

@@ -498,7 +498,8 @@ def val_tpc_ns_btp(data,lag=1,subsampsize=50,n_iter=50,alpha=0.3,thresh=0.25):
     data_trans = data_transformed(data, lag-1)
     print("Data transformed in "+str(time.time()-start_time))
     d = {'print.me': 'print_dot_me', 'print_me': 'print_uscore_me'}
-    out = ray.get([iter_tpc_ns_btp.remote(data_trans,subsampsize,alpha) for _ in range(n_iter)])
+    data_trans_id = ray.put(data_trans)
+    out = ray.get([iter_tpc_ns_btp.remote(data_trans_id,subsampsize,alpha) for _ in range(n_iter)])
     C_iter = list(zip(*out))[0]
     C_cf_iter = list(zip(*out))[1]
     C_cf2_iter = list(zip(*out))[2]
