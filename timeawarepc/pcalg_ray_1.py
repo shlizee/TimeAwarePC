@@ -13,8 +13,6 @@ from __future__ import print_function
 
 import ray
 #ray.init(address="auto")
-from ray.util.multiprocessing import Pool
-pool = Pool()
 
 from itertools import combinations, permutations
 import logging
@@ -1185,10 +1183,10 @@ def pc_plot_realdata(dataset,lag,alpha,motif,niter=10):
     #g1=[]
     causaleff2={}
 
-    pool = mp.Pool(4)
+    #pool = mp.Pool(4)
     func= partial(ablation,lag,dataset,g01,G)
     t1=time.time()
-    g1 = pool.map(func,range(m))
+    #g1 = pool.map(func,range(m))
     print(time.time()-t1)
     #for k in tqdm(range(m)):
         #idx=random.randint(0,dataset.shape[0]-1000)
