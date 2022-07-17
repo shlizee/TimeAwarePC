@@ -337,14 +337,16 @@ def ci_test_gauss(data,A,B,S,**kwargs):
         pval = 2*(1 - stats.norm.cdf(T))
     return pval
 
+#%%
+
 def btpiter(iter,btpobj,A,B,S):
-    rbtp = partial_corr(A,B,S,btpobj[iter,][0][0])
+    rbtp = partial_corr(A,B,S,btpobj[iter,:,:])
     zbtp = 0.5 * np.log((1+rbtp)/(1-rbtp))
     return np.abs(zbtp)
 
+#%%
 def ci_test_gauss_btp(data,A,B,S,**kwargs):
     import numpy as np
-    from scipy import stats, linalg
     from arch import bootstrap
     #import stationarybootstrap as SBB
     from numpy.random import RandomState
