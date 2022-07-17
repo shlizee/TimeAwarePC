@@ -9,7 +9,10 @@ Journal of Machine Learning Research, Vol. 8, pp. 613-636, 2007.
 
 License: BSD
 """
-
+import ray
+ray.init(address="auto")
+from ray.util.multiprocessing import Pool
+pool = Pool(address="auto")
 from __future__ import print_function
 
 from itertools import combinations, permutations
@@ -333,6 +336,8 @@ def ci_test_gauss(data,A,B,S,**kwargs):
         T = np.sqrt(data.shape[0]-len(S)-3)*np.abs(z)
         pval = 2*(1 - stats.norm.cdf(T))
     return pval
+
+@ray.remote
 def btpiter(iter,btpobj,A,B,S):
     rbtp = partial_corr(A,B,S,btpobj[iter,][0][0])
     zbtp = 0.5 * np.log((1+rbtp)/(1-rbtp))
@@ -345,8 +350,6 @@ def ci_test_gauss_btp(data,A,B,S,**kwargs):
     #import stationarybootstrap as SBB
     from numpy.random import RandomState
     from functools import partial
-    from ray.util.multiprocessing import Pool
-    pool = Pool(ray_address="auto")
     r = partial_corr(A,B,S,data)
     #print(r)
     if r==1:
@@ -362,7 +365,7 @@ def ci_test_gauss_btp(data,A,B,S,**kwargs):
         #idx=0
         bs = bootstrap.StationaryBootstrap(np.median(band.iloc[:,0]),data)
         btpobj = np.asarray([x[0][0] for x in bs.bootstrap(nbtp)])
-        Tbtp = pool(partial(btpiter,btpobj=btpobj,A=A,B=B,S=S))
+        Tbtp = ray.get(pool.map(partial(btpiter.remote,btpobj=btpobj,A=A,B=B,S=S),range(nbtp)))
         pval = np.sum(Tbtp>2*T)/nbtp
         #print(pval)
     return pval
@@ -402,7 +405,7 @@ def hsic_condind(data,A,B,S,**kwargs):
     #         if i in S:
     #             idx[i]=True
     #     sig,pval,T=hsiccondTestIC(data[:,A],data[:,B],data[:,idx])
-    return pval
+#    return pval
     
 def partial_corr(A,B,S,data):
     import numpy as np
