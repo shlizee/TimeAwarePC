@@ -10,9 +10,9 @@ Journal of Machine Learning Research, Vol. 8, pp. 613-636, 2007.
 License: BSD
 """
 import ray
-ray.init(address="auto")
+#ray.init(address="auto")
 from ray.util.multiprocessing import Pool
-pool = Pool(address="auto")
+pool = Pool()
 from __future__ import print_function
 
 from itertools import combinations, permutations
@@ -337,7 +337,6 @@ def ci_test_gauss(data,A,B,S,**kwargs):
         pval = 2*(1 - stats.norm.cdf(T))
     return pval
 
-@ray.remote
 def btpiter(iter,btpobj,A,B,S):
     rbtp = partial_corr(A,B,S,btpobj[iter,][0][0])
     zbtp = 0.5 * np.log((1+rbtp)/(1-rbtp))
@@ -365,7 +364,7 @@ def ci_test_gauss_btp(data,A,B,S,**kwargs):
         #idx=0
         bs = bootstrap.StationaryBootstrap(np.median(band.iloc[:,0]),data)
         btpobj = np.asarray([x[0][0] for x in bs.bootstrap(nbtp)])
-        Tbtp = ray.get(pool.map(partial(btpiter.remote,btpobj=btpobj,A=A,B=B,S=S),range(nbtp)))
+        Tbtp = pool.map(partial(btpiter.remote,btpobj=btpobj,A=A,B=B,S=S),range(nbtp))
         pval = np.sum(Tbtp>2*T)/nbtp
         #print(pval)
     return pval
