@@ -340,7 +340,7 @@ def ci_test_gauss(data,A,B,S,**kwargs):
 
 #%%
 @ray.remote
-def btpiter(btpobj,A,B,S):
+def btpiter(iter,btpobj,A,B,S):
     rbtp = partial_corr(A,B,S,btpobj[iter,:,:])
     zbtp = 0.5 * np.log((1+rbtp)/(1-rbtp))
     return np.abs(zbtp)
@@ -368,7 +368,7 @@ def ci_test_gauss_btp(data,A,B,S,**kwargs):
         bs = bootstrap.StationaryBootstrap(np.median(band.iloc[:,0]),data)
         btpobj = np.asarray([x[0][0] for x in bs.bootstrap(nbtp)])
         btpobj_id = ray.put(btpobj)
-        Tbtp = ray.get([btpiter.remote(btpobj=btpobj_id,A=A,B=B,S=S) for _ in range(nbtp)])
+        Tbtp = ray.get([btpiter.remote(iter,btpobj=btpobj_id,A=A,B=B,S=S) for iter in range(nbtp)])
         pval = np.sum(Tbtp>2*T)/nbtp
         #print(pval)
     return pval
