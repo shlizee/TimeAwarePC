@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 """A graph generator based on the PC algorithm [Kalisch2007].
 
 [Kalisch2007] Markus Kalisch and Peter Bhlmann. Estimating
