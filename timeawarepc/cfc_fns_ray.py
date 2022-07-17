@@ -456,14 +456,8 @@ def val_tpc_ns_btp(data,lag=1,subsampsize=50,n_iter=50,alpha=0.3,thresh=0.25):
     #random.seed(111)
     import time
     import numpy as np
-    import pandas as pd
     from timeawarepc.pcalg_ray import data_transformed,estimate_skeleton,return_finaledges_v2,estimate_cpdag,ci_test_gauss,data_transformed_overlapping, causaleff_ida, return_finaledges, orient,ci_test_gauss_btp
-    import rpy2.robjects as robjects
-    from rpy2.robjects.packages import importr
-    import rpy2.rlike.container as rlc
-    from rpy2.robjects import pandas2ri
     import random
-    import networkx as nx
     C_iter=[]
     C_cf_iter=[]
     C_cf2_iter=[]
