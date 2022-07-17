@@ -41,7 +41,7 @@ def hsic_CI(X,Y,Z=None,alpha=0.05,reps=50):
         out = kpcalg.hsic_gamma(X,Y)
         testStat=out.rx2('statistic')[0]
         nullapprox = np.zeros(reps)
-
+        
         band = bootstrap.optimal_block_length(Y)
         #print("band "+str(np.max(band.iloc[:,0])))
         bs = bootstrap.StationaryBootstrap(np.max(band.iloc[:,0]),Y)

@@ -102,8 +102,8 @@ def estimate_skeleton(indep_test_func, data_matrix, alpha, **kwargs):
                 for k in combinations(adj_i, l):
                     _logger.debug('indep prob of %s and %s with subset %s'
                                 % (i, j, str(k)))
-                    p_val = indep_test_func(data_matrix, i, j, set(k),
-                                            **kwargs)
+                    p_val = ray.get(indep_test_func(data_matrix, i, j, set(k),
+                                            **kwargs))
                     _logger.debug('p_val is %s' % str(p_val))
                     if p_val > alpha:
                         if g.has_edge(i, j):
@@ -338,13 +338,14 @@ def ci_test_gauss(data,A,B,S,**kwargs):
     return pval
 
 #%%
-
+@ray.remote
 def btpiter(iter,btpobj,A,B,S):
     rbtp = partial_corr(A,B,S,btpobj[iter,:,:])
     zbtp = 0.5 * np.log((1+rbtp)/(1-rbtp))
     return np.abs(zbtp)
 
 #%%
+@ray.remote
 def ci_test_gauss_btp(data,A,B,S,**kwargs):
     import numpy as np
     from arch import bootstrap
@@ -366,7 +367,7 @@ def ci_test_gauss_btp(data,A,B,S,**kwargs):
         #idx=0
         bs = bootstrap.StationaryBootstrap(np.median(band.iloc[:,0]),data)
         btpobj = np.asarray([x[0][0] for x in bs.bootstrap(nbtp)])
-        Tbtp = pool.map(partial(btpiter,btpobj=btpobj,A=A,B=B,S=S),range(nbtp))
+        Tbtp = ray.get(pool.map(partial(btpiter.remote,btpobj=btpobj,A=A,B=B,S=S),range(nbtp)))
         pval = np.sum(Tbtp>2*T)/nbtp
         #print(pval)
     return pval
@@ -427,72 +428,7 @@ def partial_corr(A,B,S,data):
     p_corr = stats.pearsonr(res_A, res_B)[0]  
     
     return p_corr
-if __name__ == '__main__':
-    import networkx as nx
-    import numpy as np
 
-    from gsq.ci_tests import ci_test_bin, ci_test_dis
-    from gsq.gsq_testdata import bin_data, dis_data
-
-    # ch = logging.StreamHandler()
-    # ch.setLevel(logging.DEBUG)
-    # _logger.setLevel(logging.DEBUG)
-    # _logger.addHandler(ch)
-
-    dm = np.array(bin_data).reshape((5000, 5))
-    (g, sep_set) = estimate_skeleton(indep_test_func=ci_test_bin,
-                                     data_matrix=dm,
-                                     alpha=0.01)
-    g = estimate_cpdag(skel_graph=g, sep_set=sep_set)
-    g_answer = nx.DiGraph()
-    g_answer.add_nodes_from([0, 1, 2, 3, 4])
-    g_answer.add_edges_from([(0, 1), (2, 3), (3, 2), (3, 1),
-                             (2, 4), (4, 2), (4, 1)])
-    print('Edges are:', g.edges(), end='')
-    if nx.is_isomorphic(g, g_answer):
-        print(' => GOOD')
-    else:
-        print(' => WRONG')
-        print('True edges should be:', g_answer.edges())
-
-    dm = np.array(dis_data).reshape((10000, 5))
-    (g, sep_set) = estimate_skeleton(indep_test_func=ci_test_dis,
-                                     data_matrix=dm,
-                                     alpha=0.01,
-                                     levels=[3,2,3,4,2])
-    g = estimate_cpdag(skel_graph=g, sep_set=sep_set)
-    g_answer = nx.DiGraph()
-    g_answer.add_nodes_from([0, 1, 2, 3, 4])
-    g_answer.add_edges_from([(0, 2), (1, 2), (1, 3), (4, 3)])
-    print('Edges are:', g.edges(), end='')
-    if nx.is_isomorphic(g, g_answer):
-        print(' => GOOD')
-    else:
-        print(' => WRONG')
-        print('True edges should be:', g_answer.edges())
-
-    dm1 = np.random.normal(0,1,1000)
-    dm2 = np.random.normal(0,1,1000)
-    dm3 = dm1 + 0.5*dm2 + np.random.normal(0,1,1000)
-    dm4 = dm3 + np.random.normal(0,1,1000)
-
-    data=np.column_stack((dm1,dm2,dm3,dm4))
-    data -= data.mean(axis=0)
-    data /= data.std(axis=0)
-    (g, sep_set) = estimate_skeleton(indep_test_func=ci_test_gauss,
-                                     data_matrix=dm,
-                                     alpha=0.01,
-                                     method='stable')
-    g = estimate_cpdag(skel_graph=g, sep_set=sep_set)
-    g_answer = nx.DiGraph()
-    g_answer.add_nodes_from([0, 1, 2, 3])
-    g_answer.add_edges_from([(0, 2), (1, 2), (2, 3)])
-    print('Edges are:', g.edges(), end='')
-    if nx.is_isomorphic(g, g_answer):
-        print(' => GOOD')
-    else:
-        print(' => WRONG')
-        print('True edges should be:', g_answer.edges())
 #%%
 # def cmiknn_indeptest(data,A,B,S,**kwargs):
 #     from tigramite.independence_tests import CMIknn

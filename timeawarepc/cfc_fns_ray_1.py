@@ -1,3 +1,4 @@
+import ray
 def val_pc_gauss(data_trans,alpha):
     from timeawarepc.pcalg_ray_1 import estimate_skeleton, estimate_cpdag, causaleff_ida, ci_test_gauss
     import networkx as nx
@@ -243,7 +244,7 @@ def val_tpc_sno_btp(data,lag=1,alpha=0.1):
     import networkx as nx
     start_time = time.time()
     data_trans = data_transformed(data, lag-1)
-    (g, sep_set) = estimate_skeleton(indep_test_func=ci_test_gauss_btp,
+    (g, sep_set) = estimate_skeleton(indep_test_func=ci_test_gauss_btp.remote,
                                         data_matrix=data_trans,
                                         alpha=alpha,method='stable')
     g = estimate_cpdag(skel_graph=g, sep_set=sep_set)
@@ -452,17 +453,40 @@ def val_tpc_ns_hsic(data,lag=1,subsampsize=50,n_iter=50,alpha=0.3,thresh=0.25):
     #val_out2=val_out
     val_out[np.abs(ce_out) <= np.nanmax(np.abs(ce_out))/10]=0
     return val_out,ce_out,ce_out2
+
+@ray.remote
+def iter_tpc_ns_btp(data_trans,subsampsize,alpha):
+    import random
+    import time
+    from timeawarepc.pcalg_ray_1 import data_transformed,estimate_skeleton,return_finaledges_v2,estimate_cpdag,ci_test_gauss,data_transformed_overlapping, causaleff_ida, return_finaledges, orient,ci_test_gauss_btp
+
+    start_btrstrp = time.time()
+    #print("Starting bootstrap "+str(inneriter))
+    #data_trans_pd=pd.DataFrame(data_trans[random.sample(range(data_trans.shape[0]),k=subsampsize),:])
+    n=data_trans.shape[0]
+    r_idx = random.sample(range(n-subsampsize),1)[0]
+    data_trans_pd=data_trans[r_idx:(r_idx+subsampsize),:]
+    #data_trans_pd=pd.DataFrame(data_trans)
+    #dat=robjects.r.data('data_trans_pd')
+    (g, sep_set) = estimate_skeleton(indep_test_func=ci_test_gauss_btp.remote,
+                                        data_matrix=data_trans_pd,
+                                        alpha=alpha,method='stable')
+    g = estimate_cpdag(skel_graph=g, sep_set=sep_set)
+    #g=orient(g,lag,data.shape[1])
+    causaleff = causaleff_ida(g,data_trans)
+    G,causaleffin, causaleffin2=return_finaledges_v2(g,causaleff,lag,data.shape[1])
+    print("Done in "+str(time.time()-start_btrstrp))
+    return (G,causaleffin,causaleffin2)
+
+@ray.remote
 def val_tpc_ns_btp(data,lag=1,subsampsize=50,n_iter=50,alpha=0.3,thresh=0.25):
     #random.seed(111)
-    import time
     import numpy as np
     import pandas as pd
-    from timeawarepc.pcalg_ray_1 import data_transformed,estimate_skeleton,return_finaledges_v2,estimate_cpdag,ci_test_gauss,data_transformed_overlapping, causaleff_ida, return_finaledges, orient,ci_test_gauss_btp
     import rpy2.robjects as robjects
     from rpy2.robjects.packages import importr
     import rpy2.rlike.container as rlc
     from rpy2.robjects import pandas2ri
-    import random
     import networkx as nx
     C_iter=[]
     C_cf_iter=[]
@@ -474,30 +498,10 @@ def val_tpc_ns_btp(data,lag=1,subsampsize=50,n_iter=50,alpha=0.3,thresh=0.25):
     data_trans = data_transformed(data, lag-1)
     print("Data transformed in "+str(time.time()-start_time))
     d = {'print.me': 'print_dot_me', 'print_me': 'print_uscore_me'}
-    for inneriter in range(n_iter):
-        start_btrstrp = time.time()
-        print("Starting bootstrap "+str(inneriter))
-        #data_trans_pd=pd.DataFrame(data_trans[random.sample(range(data_trans.shape[0]),k=subsampsize),:])
-        n=data_trans.shape[0]
-        r_idx = random.sample(range(n-subsampsize),1)[0]
-        data_trans_pd=data_trans[r_idx:(r_idx+subsampsize),:]
-        #data_trans_pd=pd.DataFrame(data_trans)
-        #dat=robjects.r.data('data_trans_pd')
-        p=data_trans_pd.shape[1]
-        m=data.shape[1]
-        (g, sep_set) = estimate_skeleton(indep_test_func=ci_test_gauss_btp,
-                                            data_matrix=data_trans_pd,
-                                            alpha=alpha,method='stable')
-        g = estimate_cpdag(skel_graph=g, sep_set=sep_set)
-        #g=orient(g,lag,data.shape[1])
-        causaleff = causaleff_ida(g,data_trans)
-        G,causaleffin, causaleffin2=return_finaledges_v2(g,causaleff,lag,data.shape[1])
-        #A=nx.adjacency_matrix(G)
-        A_rr=G#A.toarray()
-        C_iter.append(A_rr)
-        C_cf_iter.append(causaleffin)
-        C_cf2_iter.append(causaleffin2)
-        print("Done in "+str(time.time()-start_btrstrp))
+    out = ray.get([iter_tpc_ns_btp.remote(data_trans,subsampsize,alpha) for _ in range(n_iter)])
+    C_iter = list(zip(*out))[0]
+    C_cf_iter = list(zip(*out))[1]
+    C_cf2_iter = list(zip(*out))[2]
     val_out=(np.mean(np.asarray(C_iter),axis=0)>=thresh).astype(int)
     ce_out=np.nanmean(np.where(np.asarray(C_cf_iter)!=0,np.asarray(C_cf_iter),np.nan),axis=0)#np.apply_along_axis(avg,0,np.asarray(C_cf_iter))
     ce_out2=np.nanmean(np.where(np.asarray(C_cf2_iter)!=0,np.asarray(C_cf2_iter),np.nan),axis=0)#np.apply_along_axis(avg,0,np.asarray(C_cf_iter2))
@@ -505,6 +509,7 @@ def val_tpc_ns_btp(data,lag=1,subsampsize=50,n_iter=50,alpha=0.3,thresh=0.25):
     #val_out2=val_out
     val_out[np.abs(ce_out) <= np.nanmax(np.abs(ce_out))/10]=0
     return val_out,ce_out,ce_out2
+
 def val_neuropc(data,lag=1,subsampsize=50,n_iter=1,alpha=0.3,thresh=0.25,v2=False):
     #random.seed(111)
     import time
