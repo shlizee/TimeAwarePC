@@ -102,8 +102,8 @@ def estimate_skeleton(indep_test_func, data_matrix, alpha, **kwargs):
                 for k in combinations(adj_i, l):
                     _logger.debug('indep prob of %s and %s with subset %s'
                                 % (i, j, str(k)))
-                    p_val = ray.get(indep_test_func(data_matrix, i, j, set(k),
-                                            **kwargs))
+                    p_val = indep_test_func(data_matrix, i, j, set(k),
+                                            **kwargs)
                     _logger.debug('p_val is %s' % str(p_val))
                     if p_val > alpha:
                         if g.has_edge(i, j):
@@ -339,13 +339,12 @@ def ci_test_gauss(data,A,B,S,**kwargs):
 
 #%%
 @ray.remote
-def btpiter(iter,btpobj,A,B,S):
+def btpiter(btpobj,A,B,S):
     rbtp = partial_corr(A,B,S,btpobj[iter,:,:])
     zbtp = 0.5 * np.log((1+rbtp)/(1-rbtp))
     return np.abs(zbtp)
 
 #%%
-@ray.remote
 def ci_test_gauss_btp(data,A,B,S,**kwargs):
     import numpy as np
     from arch import bootstrap
@@ -367,7 +366,7 @@ def ci_test_gauss_btp(data,A,B,S,**kwargs):
         #idx=0
         bs = bootstrap.StationaryBootstrap(np.median(band.iloc[:,0]),data)
         btpobj = np.asarray([x[0][0] for x in bs.bootstrap(nbtp)])
-        Tbtp = ray.get(pool.map(partial(btpiter.remote,btpobj=btpobj,A=A,B=B,S=S),range(nbtp)))
+        Tbtp = ray.get([btpiter.remote(btpobj=btpobj,A=A,B=B,S=S) for _ in range(nbtp)])
         pval = np.sum(Tbtp>2*T)/nbtp
         #print(pval)
     return pval

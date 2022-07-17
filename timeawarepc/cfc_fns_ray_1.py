@@ -244,7 +244,7 @@ def val_tpc_sno_btp(data,lag=1,alpha=0.1):
     import networkx as nx
     start_time = time.time()
     data_trans = data_transformed(data, lag-1)
-    (g, sep_set) = estimate_skeleton(indep_test_func=ci_test_gauss_btp.remote,
+    (g, sep_set) = estimate_skeleton(indep_test_func=ci_test_gauss_btp,
                                         data_matrix=data_trans,
                                         alpha=alpha,method='stable')
     g = estimate_cpdag(skel_graph=g, sep_set=sep_set)
@@ -468,7 +468,7 @@ def iter_tpc_ns_btp(data_trans,subsampsize,alpha):
     data_trans_pd=data_trans[r_idx:(r_idx+subsampsize),:]
     #data_trans_pd=pd.DataFrame(data_trans)
     #dat=robjects.r.data('data_trans_pd')
-    (g, sep_set) = estimate_skeleton(indep_test_func=ci_test_gauss_btp.remote,
+    (g, sep_set) = estimate_skeleton(indep_test_func=ci_test_gauss_btp,
                                         data_matrix=data_trans_pd,
                                         alpha=alpha,method='stable')
     g = estimate_cpdag(skel_graph=g, sep_set=sep_set)
@@ -478,7 +478,7 @@ def iter_tpc_ns_btp(data_trans,subsampsize,alpha):
     print("Done in "+str(time.time()-start_btrstrp))
     return (G,causaleffin,causaleffin2)
 
-@ray.remote
+
 def val_tpc_ns_btp(data,lag=1,subsampsize=50,n_iter=50,alpha=0.3,thresh=0.25):
     #random.seed(111)
     import numpy as np
