@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 """A graph generator based on the PC algorithm [Kalisch2007].
 
 [Kalisch2007] Markus Kalisch and Peter Bhlmann. Estimating
@@ -8,10 +9,8 @@ Journal of Machine Learning Research, Vol. 8, pp. 613-636, 2007.
 
 License: BSD
 """
-from __future__ import print_function
 
-import ray
-#ray.init(address="auto")
+from __future__ import print_function
 
 from itertools import combinations, permutations
 import logging
@@ -334,21 +333,12 @@ def ci_test_gauss(data,A,B,S,**kwargs):
         T = np.sqrt(data.shape[0]-len(S)-3)*np.abs(z)
         pval = 2*(1 - stats.norm.cdf(T))
     return pval
-
-#%%
-@ray.remote
-def btpiter(iter,btpobj,A,B,S):
-    rbtp = partial_corr(A,B,S,btpobj[iter,:,:])
-    zbtp = 0.5 * np.log((1+rbtp)/(1-rbtp))
-    return np.abs(zbtp)
-
-#%%
 def ci_test_gauss_btp(data,A,B,S,**kwargs):
     import numpy as np
+    from scipy import stats, linalg
     from arch import bootstrap
     #import stationarybootstrap as SBB
     from numpy.random import RandomState
-    from functools import partial
     r = partial_corr(A,B,S,data)
     #print(r)
     if r==1:
@@ -357,15 +347,28 @@ def ci_test_gauss_btp(data,A,B,S,**kwargs):
         z = 0.5 * np.log((1+r)/(1-r))
         T = np.abs(z)
         band = bootstrap.optimal_block_length(data)
-        #n = data.shape[0]
-        #p = data.shape[1]
+        n = data.shape[0]
+        p = data.shape[1]
         nbtp = 50
         Tbtp = np.zeros(nbtp)
-        #idx=0
+        idx=0
         bs = bootstrap.StationaryBootstrap(np.median(band.iloc[:,0]),data)
-        btpobj = np.asarray([x[0][0] for x in bs.bootstrap(nbtp)])
-        btpobj_id = ray.put(btpobj)
-        Tbtp = ray.get([btpiter.remote(iter,btpobj=btpobj_id,A=A,B=B,S=S) for iter in range(nbtp)])
+        #bs = bootstrap.StationaryBootstrap(50,data)
+        #bs = bootstrap.CircularBlockBootstrap(50,data)
+        #for data1 in bs.bootstrap(nbtp):
+        #ystar, yindices, yindicedict = SBB.resample(data, 0.04)
+        #for idx1 in range(50):
+        #    data1, yindices, yindicedict = SBB.resample(data, 0.04)# = ystar[idx1,:,:]
+        for data1 in bs.bootstrap(nbtp):
+            rbtp = partial_corr(A,B,S,data1[0][0])
+            zbtp = 0.5 * np.log((1+rbtp)/(1-rbtp))
+            Tbtp[idx] = np.abs(zbtp)
+            idx=idx+1
+        # blower = np.quantile(Tbtp,alpha/2)-T
+        # bupper = np.quantile(Tbtp,1-alpha/2)-T
+        # T-bupper
+        # T+blower
+        # 2*T-np.quantile(Tbtp,1-alpha/2)
         pval = np.sum(Tbtp>2*T)/nbtp
         #print(pval)
     return pval
@@ -405,7 +408,7 @@ def hsic_condind(data,A,B,S,**kwargs):
     #         if i in S:
     #             idx[i]=True
     #     sig,pval,T=hsiccondTestIC(data[:,A],data[:,B],data[:,idx])
-#    return pval
+    return pval
     
 def partial_corr(A,B,S,data):
     import numpy as np
@@ -426,7 +429,72 @@ def partial_corr(A,B,S,data):
     p_corr = stats.pearsonr(res_A, res_B)[0]  
     
     return p_corr
+if __name__ == '__main__':
+    import networkx as nx
+    import numpy as np
 
+    from gsq.ci_tests import ci_test_bin, ci_test_dis
+    from gsq.gsq_testdata import bin_data, dis_data
+
+    # ch = logging.StreamHandler()
+    # ch.setLevel(logging.DEBUG)
+    # _logger.setLevel(logging.DEBUG)
+    # _logger.addHandler(ch)
+
+    dm = np.array(bin_data).reshape((5000, 5))
+    (g, sep_set) = estimate_skeleton(indep_test_func=ci_test_bin,
+                                     data_matrix=dm,
+                                     alpha=0.01)
+    g = estimate_cpdag(skel_graph=g, sep_set=sep_set)
+    g_answer = nx.DiGraph()
+    g_answer.add_nodes_from([0, 1, 2, 3, 4])
+    g_answer.add_edges_from([(0, 1), (2, 3), (3, 2), (3, 1),
+                             (2, 4), (4, 2), (4, 1)])
+    print('Edges are:', g.edges(), end='')
+    if nx.is_isomorphic(g, g_answer):
+        print(' => GOOD')
+    else:
+        print(' => WRONG')
+        print('True edges should be:', g_answer.edges())
+
+    dm = np.array(dis_data).reshape((10000, 5))
+    (g, sep_set) = estimate_skeleton(indep_test_func=ci_test_dis,
+                                     data_matrix=dm,
+                                     alpha=0.01,
+                                     levels=[3,2,3,4,2])
+    g = estimate_cpdag(skel_graph=g, sep_set=sep_set)
+    g_answer = nx.DiGraph()
+    g_answer.add_nodes_from([0, 1, 2, 3, 4])
+    g_answer.add_edges_from([(0, 2), (1, 2), (1, 3), (4, 3)])
+    print('Edges are:', g.edges(), end='')
+    if nx.is_isomorphic(g, g_answer):
+        print(' => GOOD')
+    else:
+        print(' => WRONG')
+        print('True edges should be:', g_answer.edges())
+
+    dm1 = np.random.normal(0,1,1000)
+    dm2 = np.random.normal(0,1,1000)
+    dm3 = dm1 + 0.5*dm2 + np.random.normal(0,1,1000)
+    dm4 = dm3 + np.random.normal(0,1,1000)
+
+    data=np.column_stack((dm1,dm2,dm3,dm4))
+    data -= data.mean(axis=0)
+    data /= data.std(axis=0)
+    (g, sep_set) = estimate_skeleton(indep_test_func=ci_test_gauss,
+                                     data_matrix=dm,
+                                     alpha=0.01,
+                                     method='stable')
+    g = estimate_cpdag(skel_graph=g, sep_set=sep_set)
+    g_answer = nx.DiGraph()
+    g_answer.add_nodes_from([0, 1, 2, 3])
+    g_answer.add_edges_from([(0, 2), (1, 2), (2, 3)])
+    print('Edges are:', g.edges(), end='')
+    if nx.is_isomorphic(g, g_answer):
+        print(' => GOOD')
+    else:
+        print(' => WRONG')
+        print('True edges should be:', g_answer.edges())
 #%%
 # def cmiknn_indeptest(data,A,B,S,**kwargs):
 #     from tigramite.independence_tests import CMIknn
@@ -1182,10 +1250,10 @@ def pc_plot_realdata(dataset,lag,alpha,motif,niter=10):
     #g1=[]
     causaleff2={}
 
-    #pool = mp.Pool(4)
+    pool = mp.Pool(4)
     func= partial(ablation,lag,dataset,g01,G)
     t1=time.time()
-    #g1 = pool.map(func,range(m))
+    g1 = pool.map(func,range(m))
     print(time.time()-t1)
     #for k in tqdm(range(m)):
         #idx=random.randint(0,dataset.shape[0]-1000)
