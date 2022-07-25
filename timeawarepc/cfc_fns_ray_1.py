@@ -376,14 +376,14 @@ def val_tpc_ns_hsic_btp(data,lag=1,subsampsize=50,n_iter=50,alpha=0.3,thresh=0.2
     data_trans = data_transformed(data, lag-1)
     #d = {'print.me': 'print_dot_me', 'print_me': 'print_uscore_me'}
     data_trans_id = ray.put(data_trans)
-    out = ray.get([iter_tpc_ns_btp.remote(data_trans_id,subsampsize,alpha,lag,data.shape[1]) for _ in range(n_iter)])
+    out = ray.get([iter_tpc_ns_hsic_btp.remote(data_trans_id,subsampsize,alpha,lag,data.shape[1]) for _ in range(n_iter)])
     C_iter = list(zip(*out))[0]
     C_cf_iter = list(zip(*out))[1]
     C_cf2_iter = list(zip(*out))[2]
     val_out=(np.mean(np.asarray(C_iter),axis=0)>=thresh).astype(int)
     ce_out=np.nanmean(np.where(np.asarray(C_cf_iter)!=0,np.asarray(C_cf_iter),np.nan),axis=0)#np.apply_along_axis(avg,0,np.asarray(C_cf_iter))
     ce_out2=np.nanmean(np.where(np.asarray(C_cf2_iter)!=0,np.asarray(C_cf2_iter),np.nan),axis=0)#np.apply_along_axis(avg,0,np.asarray(C_cf_iter2))
-    print("CE shape "+str(ce_out.shape)+" "+str(ce_out2.shape))
+    #print("CE shape "+str(ce_out.shape)+" "+str(ce_out2.shape))
     #val_out2=val_out
     val_out[np.abs(ce_out) <= np.nanmax(np.abs(ce_out))/10]=0
     return val_out,ce_out,ce_out2
@@ -462,7 +462,7 @@ def iter_tpc_ns_btp(data_trans,subsampsize,alpha,lag,m):
     #g=orient(g,lag,data.shape[1])
     causaleff = causaleff_ida(g,data_trans)
     G,causaleffin, causaleffin2=return_finaledges_v2(g,causaleff,lag,m)
-    print("Done in "+str(time.time()-start_btrstrp))
+    #print("Done in "+str(time.time()-start_btrstrp))
     return (G,causaleffin,causaleffin2)
 
 
@@ -479,7 +479,7 @@ def val_tpc_ns_btp(data,lag=1,subsampsize=50,n_iter=50,alpha=0.3,thresh=0.25):
     start_time = time.time()
     #data_trans = data_transformed_v2(data, lag,window)
     data_trans = data_transformed(data, lag-1)
-    print("Data transformed in "+str(time.time()-start_time))
+    #print("Data transformed in "+str(time.time()-start_time))
     d = {'print.me': 'print_dot_me', 'print_me': 'print_uscore_me'}
     data_trans_id = ray.put(data_trans)
     out = ray.get([iter_tpc_ns_btp.remote(data_trans_id,subsampsize,alpha,lag,data.shape[1]) for _ in range(n_iter)])
