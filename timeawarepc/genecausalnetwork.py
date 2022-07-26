@@ -31,6 +31,17 @@ def val_pc_hsic(data_trans,alpha):
     val_matrix = A
     causaleff = causaleff_ida(g,data_trans)
     return val_matrix, causaleff
+def val_pc_gauss(data_trans,alpha):
+    from timeawarepc.pcalg_ray import estimate_skeleton, estimate_cpdag, causaleff_ida, ci_test_gauss
+    import networkx as nx
+    (g, sep_set) = estimate_skeleton(indep_test_func=ci_test_gauss,
+                                        data_matrix=data_trans,
+                                        alpha=alpha,method='stable')
+    g = estimate_cpdag(skel_graph=g, sep_set=sep_set)
+    A=nx.adjacency_matrix(g).toarray()
+    val_matrix = A
+    causaleff = causaleff_ida(g,data_trans)
+    return val_matrix, causaleff
 def causaleff_ida(g,data):
     import numpy as np
     Nodes = list(g.nodes)
