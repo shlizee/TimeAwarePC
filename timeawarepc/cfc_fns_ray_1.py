@@ -375,7 +375,7 @@ def val_tpc_ns_hsic_btp(data,lag=1,subsampsize=50,n_iter=50,alpha=0.3,thresh=0.2
     C_cf2_iter=[]
     data_trans = data_transformed(data, lag-1)
     #d = {'print.me': 'print_dot_me', 'print_me': 'print_uscore_me'}
-    data_trans_id = ray.put(data_trans)
+    data_trans_id = data_trans#ray.put(data_trans)
     out = ray.get([iter_tpc_ns_hsic_btp(data_trans_id,subsampsize,alpha,lag,data.shape[1]) for _ in range(n_iter)])
     C_iter = list(zip(*out))[0]
     C_cf_iter = list(zip(*out))[1]
