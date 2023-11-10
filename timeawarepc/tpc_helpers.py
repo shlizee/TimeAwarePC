@@ -76,13 +76,14 @@ def causaleff_ida(g,data):
                 else:
                     regressors = pa_x
                 if y in pa_x:
-                    causaleff[x,y] = 0
-                else:
-                    X=np.asarray(data[:,regressors])
-                    Y=np.asarray(data[:,y])
-                    X0=np.hstack((np.ones((X.shape[0],1)),X))
-                    lm_out = np.linalg.lstsq(X0,Y,rcond=None)[0]
-                    causaleff[x,y] = lm_out[regressors.index(x)+1]
+#                    causaleff[x,y] = 0#uncomment this and comment below for legacy version
+                    regressors = [item for item in regressors if item != y]
+#                else:#uncomment for legacy version
+                X=np.asarray(data[:,regressors])
+                Y=np.asarray(data[:,y])
+                X0=np.hstack((np.ones((X.shape[0],1)),X))
+                lm_out = np.linalg.lstsq(X0,Y,rcond=None)[0]
+                causaleff[x,y] = lm_out[regressors.index(x)+1]
     return causaleff
 
 def return_finaledges(g,causaleff,maxdelay,m):
