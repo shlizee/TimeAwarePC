@@ -4,7 +4,9 @@
 
 # Required
 version: 2
-
+build:
+  os: "ubuntu-22.04"
+   
 conda:
     environment: docs/source/conda_environment.yml
 
