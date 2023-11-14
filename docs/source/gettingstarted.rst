@@ -13,7 +13,8 @@ Load the packages
 	import numpy as np
 	from numpy.random import default_rng
 	rng = default_rng(seed=111)
-	from timeawarepc.tpc import cfc_tpc, cfc_pc, cfc_gc
+	from timeawarepc.tpc import cfc_tpc, cfc_pc
+	from timeawarepc.gc import cfc_gc
 	from timeawarepc.simulate_data import *
 	from timeawarepc.find_cfc import *
 
