@@ -414,7 +414,7 @@ def partial_corr(A,B,S,data):
     import numpy as np
     from scipy import stats, linalg
     p = data.shape[1]
-    idx = np.zeros(p, dtype=np.bool)
+    idx = np.zeros(p, dtype=bool)
 
     for i in range(p):
         if i in S:
