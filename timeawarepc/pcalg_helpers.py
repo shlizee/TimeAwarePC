@@ -38,7 +38,7 @@ def partial_corr(data,A,B,S):
         p_corr: Partial correlation between A and B given S.
     """
     p = data.shape[1]
-    idx = np.zeros(p, dtype=np.bool)
+    idx = np.zeros(p, dtype=bool)
 
     for i in range(p):
         if i in S:
