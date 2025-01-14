@@ -72,7 +72,7 @@ def cfc_tpc(data,maxdelay=1,subsampsize=50,niter=25,alpha=0.1,thresh=0.25,isgaus
             graphobj=dollar(out, "graph")
             graph=importr("graph")
             graphedges=graph.edges(graphobj)#, "matrix")
-            graphedgespy={int(key): np.array(re.findall(r'-?\d+\.?\d*', str(graphedges.rx2(key)))[1:]).astype(int) for key in graphedges.names}
+            graphedgespy={int(key): np.array(re.findall(r'-?\d+\.?\d*', str(graphedges.rx2(str(key))))).astype(int) for key in graphedges.names}
             g=nx.DiGraph(graphedgespy)
         else:
             data_trans_pd=data_trans[r_idx:(r_idx+subsampsize),:]
