@@ -14,7 +14,7 @@ $ pip install timeawarepc
 ```
 
 ## Requirements
-- Python ==3.10
+- Python ==3.10.*
 - Python packages automatically checked and installed as part of the setup. To use Granger Causality, additional dependency of ```nitime``` which can be installed by ```pip install nitime```.
 - R == 4.4.2
 - R package ```kpcalg``` and its dependencies. They can be installed in R or RStudio as follows:
