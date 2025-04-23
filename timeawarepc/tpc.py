@@ -81,8 +81,8 @@ def cfc_tpc(data,maxdelay=1,subsampsize=50,niter=25,alpha=0.1,thresh=0.25,isgaus
                                                 alpha=alpha,method='stable')
             g = estimate_cpdag(skel_graph=g, sep_set=sep_set)
         
-        #Step 4: Orient
-        g=orient(g,maxdelay,data.shape[1])
+        #Step 4: Orient - update: not needed
+        #g=orient(g,maxdelay,data.shape[1])
 
         #Step 5: Rolled CFC-DPGM
         causaleff = causaleff_ida(g,data_trans)#Interventional Causal Effects in Unrolled DAG
