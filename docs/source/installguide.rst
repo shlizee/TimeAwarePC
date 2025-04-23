@@ -5,7 +5,7 @@ Installation with ``pip`` is recommended. To use Granger Causality additional de
 
 Requirements
 ------------
-- Python >=3.6 and R >=4.0
+- Python ==3.10.* and R ==4.4.2
 - Install the R package requirements as follows in R.
 
 .. code-block:: R
@@ -14,7 +14,7 @@ Requirements
 	> BiocManager::install("graph")
 	> BiocManager::install("RBGL")
 	> install.packages("pcalg")
-	> install.packages("kpcalg")
+	> install.packages("https://cran.r-project.org/src/contrib/Archive/kpcalg/kpcalg_1.0.1.tar.gz")
 
 Install ``timeawarepc`` using ``pip``
 -------------------------------------
