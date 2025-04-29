@@ -3,7 +3,7 @@ import setuptools
 with open('README.md','r') as fh:
     README = fh.read()
 
-VERSION = "1.1.3"
+VERSION = "1.1.4"
 
 setuptools.setup(
     name = 'timeawarepc',
