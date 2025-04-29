@@ -4,7 +4,7 @@ import time
 import numpy as np
 import pandas as pd
 from timeawarepc.tpc_helpers import *
-from timeawarepc.pcalg import *
+from timeawarepc.pcalg import estimate_skeleton, estimate_cpdag, ci_test_gauss
 import rpy2.robjects as robjects
 from rpy2.robjects.packages import importr
 import rpy2.rlike.container as rlc
@@ -81,8 +81,8 @@ def cfc_tpc(data,maxdelay=1,subsampsize=50,niter=25,alpha=0.1,thresh=0.25,isgaus
                                                 alpha=alpha,method='stable')
             g = estimate_cpdag(skel_graph=g, sep_set=sep_set)
         
-        #Step 4: Orient
-        g=orient(g,maxdelay,data.shape[1])
+        #Step 4: Orient - update: not needed
+        #g=orient(g,maxdelay,data.shape[1])
 
         #Step 5: Rolled CFC-DPGM
         causaleff = causaleff_ida(g,data_trans)#Interventional Causal Effects in Unrolled DAG
@@ -151,5 +151,5 @@ def cfc_pc(data,alpha,isgauss=False):
 
     weights = causaleff_ida(g,data)
     adjacency=nx.adjacency_matrix(g).toarray()
-    return adjacency, weights
+    return adjacency, weights*adjacency
 # %%
