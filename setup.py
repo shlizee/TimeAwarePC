@@ -3,7 +3,7 @@ import setuptools
 with open('README.md','r') as fh:
     README = fh.read()
 
-VERSION = "1.1.1"
+VERSION = "1.1.2"
 
 setuptools.setup(
     # Needed to silence warnings (and to be a worthwhile package)
