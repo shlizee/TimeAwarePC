@@ -4,7 +4,7 @@ import time
 import numpy as np
 import pandas as pd
 from timeawarepc.tpc_helpers import *
-from timeawarepc.pcalg import *
+from timeawarepc.pcalg import estimate_skeleton, estimate_cpdag, ci_test_gauss
 import rpy2.robjects as robjects
 from rpy2.robjects.packages import importr
 import rpy2.rlike.container as rlc
@@ -151,5 +151,5 @@ def cfc_pc(data,alpha,isgauss=False):
 
     weights = causaleff_ida(g,data)
     adjacency=nx.adjacency_matrix(g).toarray()
-    return adjacency, weights
+    return adjacency, weights*adjacency
 # %%
