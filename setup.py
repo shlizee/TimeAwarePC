@@ -23,7 +23,7 @@ setuptools.setup(
         'networkx',
         'scipy'
     ],
-    python_requires='==3.10.*',
+    python_requires='>=3.7, <3.11',
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
