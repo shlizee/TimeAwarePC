@@ -7,12 +7,6 @@
 
 ## Installation
 
-You can get the latest version of TimeAwarePC as follows.
-
-```
-$ pip install timeawarepc
-```
-
 ## Requirements
 - Python >=3.7, <3.11
 - Python packages automatically checked and installed as part of the setup. To use Granger Causality, additional dependency of ```nitime``` which can be installed by ```pip install nitime```.
@@ -29,6 +23,12 @@ $ pip install timeawarepc
 ```
 pip install nitime
 ``` -->
+
+After meeting these requirements, you can get the latest version of TimeAwarePC as follows.
+
+```
+$ pip install timeawarepc
+```
 
 ## Documentation
 
