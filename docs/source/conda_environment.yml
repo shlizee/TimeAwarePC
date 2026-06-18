@@ -12,6 +12,7 @@ dependencies:
   - pandas
   - scipy
   - networkx
+  - matplotlib
   - r
   - rpy2
   - pip:
