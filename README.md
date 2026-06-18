@@ -17,7 +17,7 @@ $ conda activate timeawarepc
 $ Rscript install_r_deps.R   # installs kpcalg from CRAN archive
 ```
 
-This installs Python, R, rpy2, all required R packages (graph, RBGL, pcalg), and TimeAwarePC v2.0.0 in a single isolated environment.
+This installs Python, R, rpy2, all required R packages (graph, RBGL, pcalg, kpcalg), and the latest TimeAwarePC in a single isolated environment.
 
 ### Manual install (alternative)
 
@@ -31,6 +31,7 @@ If you prefer to install without conda:
 > BiocManager::install("graph")
 > BiocManager::install("RBGL")
 > install.packages("pcalg")
+> install.packages(c("energy", "kernlab", "RSpectra"))   # kpcalg CRAN deps
 > install.packages("https://cran.r-project.org/src/contrib/Archive/kpcalg/kpcalg_1.0.1.tar.gz")
 ```
 - Then:
