@@ -43,13 +43,17 @@ def partial_corr(data,A,B,S):
     for i in range(p):
         if i in S:
             idx[i]=True
-    C=data
-    beta_A = linalg.lstsq(C[:,idx], C[:,A])[0]
-    beta_B = linalg.lstsq(C[:,idx], C[:,B])[0]
+    C = data
 
-    res_A = C[:,A] - C[:, idx].dot(beta_A)
-    res_B = C[:,B] - C[:, idx].dot(beta_B)
-    
-    p_corr = stats.pearsonr(res_A, res_B)[0]  
-    
-    return p_corr
+    # conditioning matrix: (n_samples, n_conditioning_vars)
+    # prepend a column of ones so lstsq fits an intercept -> shift-invariant
+    Z = C[:, idx]
+    Z = np.column_stack([np.ones(Z.shape[0]), Z])
+
+    beta_A = linalg.lstsq(Z, C[:, A])[0]
+    beta_B = linalg.lstsq(Z, C[:, B])[0]
+
+    res_A = C[:, A] - Z.dot(beta_A)
+    res_B = C[:, B] - Z.dot(beta_B)
+
+    return stats.pearsonr(res_A, res_B)[0]
