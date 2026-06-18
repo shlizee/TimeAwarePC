@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v2.0.1]
+
+### Fixed
+- `__version__` in `timeawarepc/__init__.py` is now correctly synced to the package version (was stuck at `0.0.1` since release).
+- Relaxed `rpy2` pin from `==3.5.11` to `>=3.5.11`, so `pip install timeawarepc` inside a conda env does not force a downgrade of an already-installed `rpy2`.
+
+### Added
+- Top-level `environment.yml` for one-command conda install (Python, R, rpy2, all R deps except kpcalg).
+- `install_r_deps.R` that installs `kpcalg` from CRAN archive (the only R package not on conda channels).
+- README install section now leads with the conda env install path; manual install kept as alternative.
+
+### Changed (docs build)
+- ReadTheDocs conda env: bumped Python `3.7` → `3.9`, added `matplotlib` for `conf.py`. Improves docs-build compatibility with modern packaging.
+- `docs/source/conf.py`: `release` now reads from `timeawarepc.__version__` instead of being hardcoded to `2022`.
+
 ## [v2.0.0]
 
 ### Changed

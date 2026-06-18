@@ -1,0 +1,28 @@
+name: timeawarepc
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python>=3.9,<3.11
+  # Core scientific Python
+  - numpy
+  - pandas
+  - scipy
+  - networkx
+  # R + rpy2
+  - r-base
+  - rpy2
+  # R packages needed by TPC's non-Gaussian (kpcalg) path.
+  # kpcalg itself is not on conda (CRAN archive); installed in install_r_deps.R below.
+  - bioconda::bioconductor-graph
+  - bioconda::bioconductor-rbgl
+  - bioconda::r-pcalg
+  # Optional R deps (kpcalg pulls these in transitively, but pre-installing is fine)
+  - r-matrix
+  - r-mass
+  - r-mgcv
+  # Pip
+  - pip
+  - pip:
+    - timeawarepc

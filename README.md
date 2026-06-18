@@ -7,11 +7,25 @@
 
 ## Installation
 
-## Requirements
-- Python >=3.7, <3.11
-- Python packages automatically checked and installed as part of the setup. To use Granger Causality, additional dependency of ```nitime``` which can be installed by ```pip install nitime```.
-- R == 4.4.2
-- R package ```kpcalg``` and its dependencies. They can be installed in R or RStudio as follows:
+### Recommended: conda environment (handles R + kpcalg automatically)
+
+```
+$ git clone https://github.com/shlizee/TimeAwarePC.git
+$ cd TimeAwarePC
+$ conda env create -f environment.yml
+$ conda activate timeawarepc
+$ Rscript install_r_deps.R   # installs kpcalg from CRAN archive
+```
+
+This installs Python, R, rpy2, all required R packages (graph, RBGL, pcalg), and TimeAwarePC v2.0.0 in a single isolated environment.
+
+### Manual install (alternative)
+
+If you prefer to install without conda:
+
+- Python >=3.9, <3.11
+- R >= 4.0
+- R package ```kpcalg``` and its dependencies, installed via R or RStudio:
 ```
 > install.packages("BiocManager")
 > BiocManager::install("graph")
@@ -19,16 +33,12 @@
 > install.packages("pcalg")
 > install.packages("https://cran.r-project.org/src/contrib/Archive/kpcalg/kpcalg_1.0.1.tar.gz")
 ```
-<!-- - In addition, if you like to use Granger Causality functions in this package, please separately install nitime as follows:
-```
-pip install nitime
-``` -->
-
-After meeting these requirements, you can get the latest version of TimeAwarePC as follows.
-
+- Then:
 ```
 $ pip install timeawarepc
 ```
+
+To use Granger Causality, also install `nitime` (`pip install nitime`).
 
 ## Documentation
 
