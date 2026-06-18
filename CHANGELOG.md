@@ -2,14 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [v2.0.0]
 
-### Changed (BREAKING)
+### Changed
 - `cfc_tpc` now defaults to **no bootstrap subsampling**. The full time-delayed data is passed to PC in a single call. Previously, `subsampsize=50` and `niter=25` were the defaults, which truncated each PC call to a 50-row window and aggregated across 25 bootstrap iterations.
 - New signature: `cfc_tpc(data, maxdelay=1, alpha=0.1, isgauss=False, subsampsize=None, niter=None, thresh=0.25)`.
-  - To enable bootstrap subsampling (original behavior), pass BOTH `subsampsize` and `niter` explicitly.
+  - To use bootstrap stability scoring, pass BOTH `subsampsize` and `niter` together.
   - Passing only one raises `ValueError` for clarity.
   - When bootstrap is active and `subsampsize >= n_time_delayed_samples`, raises `ValueError`.
+- `find_cfc` now exposes optional `subsampsize` and `niter` arguments that are passed through to `cfc_tpc`. Defaults match the new no-bootstrap behavior.
 - Refactored the inner PC call into a private helper `_run_pc_inner(sample, alpha, isgauss)` shared by both code paths.
 
 ### Migration
