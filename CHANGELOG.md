@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v2.0.2]
+
+### Fixed (rpy2 modernization)
+- Replaced the deprecated `pandas2ri.activate()` calls in `cfc_tpc` / `cfc_pc` with a `localconverter(default_converter + pandas2ri.converter)` context (scoped narrowly to the pandas→R conversion). `pandas2ri.activate()` raises in rpy2 ≥ 3.5.11.
+- Switched `rlc.TaggedList(..., tags=...)` to `rlc.NamedList(..., names=...)` to match the current rpy2 API.
+- Wrapped `pd.Index` column labels in `robjects.StrVector` before passing to `kpcalg.kpc`; the default converter no longer auto-converts `pd.Index`.
+
+### Removed
+- `environment.yml` no longer caps `rpy2` to `<3.6`; the code is now compatible with current rpy2 versions.
+
+### Changed
+- `install_r_deps.R` now also installs CRAN deps `energy`, `kernlab`, `RSpectra` so `kpcalg` builds cleanly from the CRAN archive.
+
 ## [v2.0.1]
 
 ### Fixed

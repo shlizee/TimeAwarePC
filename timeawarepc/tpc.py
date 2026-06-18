@@ -8,7 +8,8 @@ from timeawarepc.pcalg import estimate_skeleton, estimate_cpdag, ci_test_gauss
 import rpy2.robjects as robjects
 from rpy2.robjects.packages import importr
 import rpy2.rlike.container as rlc
-from rpy2.robjects import pandas2ri
+from rpy2.robjects import pandas2ri, default_converter
+from rpy2.robjects.conversion import localconverter
 import random
 import networkx as nx
 import re
@@ -23,14 +24,16 @@ def _run_pc_inner(sample, alpha, isgauss):
         d = {'print.me': 'print_dot_me', 'print_me': 'print_uscore_me'}
         kpcalg = importr('kpcalg', robject_translations=d)
         sample_pd = pd.DataFrame(sample)
-        pandas2ri.activate()
-        df = robjects.conversion.py2rpy(sample_pd)
+        # Convert pandas -> R DataFrame inside the converter context; do all
+        # subsequent R calls outside so results stay as R objects (.rx2 etc.).
+        with localconverter(default_converter + pandas2ri.converter):
+            df = robjects.conversion.py2rpy(sample_pd)
         base = importr("base")
         out = kpcalg.kpc(**{
-            'suffStat': rlc.TaggedList((df, "hsic.perm"), tags=('data', 'ic.method')),
+            'suffStat': rlc.NamedList((df, "hsic.perm"), names=('data', 'ic.method')),
             'indepTest': kpcalg.kernelCItest,
             'alpha': alpha,
-            'labels': sample_pd.columns.astype(str),
+            'labels': robjects.StrVector(sample_pd.columns.astype(str).tolist()),
             'u2pd': "relaxed",
             'skel.method': "stable",
             'verbose': robjects.r('F'),
@@ -165,12 +168,13 @@ def cfc_pc(data,alpha,isgauss=False):
         d = {'print.me': 'print_dot_me', 'print_me': 'print_uscore_me'}
         kpcalg = importr('kpcalg', robject_translations = d)
         data_trans_pd = pd.DataFrame(data)
-        pandas2ri.activate()
-        df = robjects.conversion.py2rpy(data_trans_pd)
-        out=kpcalg.kpc(**{'suffStat' : rlc.TaggedList((df,"hsic.perm"),tags=('data','ic.method')),#robjects.r('list(data=data_trans, ic.method="hsic.perm")'),#list(data=data_trans, ic.method="hsic.perm"),
+        # Convert pandas -> R inside the converter context only.
+        with localconverter(default_converter + pandas2ri.converter):
+            df = robjects.conversion.py2rpy(data_trans_pd)
+        out=kpcalg.kpc(**{'suffStat' : rlc.NamedList((df,"hsic.perm"),names=('data','ic.method')),
         'indepTest' : kpcalg.kernelCItest,
         'alpha' : alpha,
-        'labels' : data_trans_pd.columns.astype(str),
+        'labels' : robjects.StrVector(data_trans_pd.columns.astype(str).tolist()),
         'u2pd' : "relaxed",
         'skel.method' : "stable",
         'verbose' : robjects.r('F')})
@@ -178,7 +182,7 @@ def cfc_pc(data,alpha,isgauss=False):
         dollar = base.__dict__["@"]
         graphobj=dollar(out, "graph")
         graph=importr("graph")
-        graphedges=graph.edges(graphobj)#, "matrix")
+        graphedges=graph.edges(graphobj)
         import re
         graphedgespy={int(key): np.array(re.findall(r'-?\d+\.?\d*', str(graphedges.rx2(key)))[1:]).astype(int) for key in graphedges.names}
         g=nx.DiGraph(graphedgespy)

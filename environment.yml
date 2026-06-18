@@ -12,7 +12,7 @@ dependencies:
   - networkx
   # R + rpy2
   - r-base
-  - rpy2
+  - rpy2>=3.5.11
   # R packages needed by TPC's non-Gaussian (kpcalg) path.
   # kpcalg itself is not on conda (CRAN archive); installed in install_r_deps.R below.
   - bioconda::bioconductor-graph
