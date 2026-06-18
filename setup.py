@@ -19,7 +19,7 @@ setuptools.setup(
     install_requires=[
         'numpy',
         'pandas',
-        'rpy2>=3.5.11,<3.6',
+        'rpy2>=3.5.11',
         'networkx',
         'scipy'
     ],
