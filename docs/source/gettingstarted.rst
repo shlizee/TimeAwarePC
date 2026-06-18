@@ -78,9 +78,9 @@ Specify a method_name. 'TPC' for Time-Aware PC Algorithm, 'PC' for PC Algorithm,
 	isgauss = (model == 'lingauss')
 	if method_name == 'TPC':
 	    maxdelay=1
-	    niter = 50
-	    thresh = 0.25
-	    adjmat, causaleffmat = cfc_tpc(data,maxdelay=maxdelay,alpha=alpha,niter=niter,thresh=thresh,isgauss=isgauss)
+	    # Default: no bootstrap, use full time-delayed data.
+	    # To enable bootstrap stability scoring, pass subsampsize and niter together.
+	    adjmat, causaleffmat = cfc_tpc(data, maxdelay=maxdelay, alpha=alpha, isgauss=isgauss)
 	elif method_name == 'PC':
 	    adjmat, causaleffmat = cfc_pc(data,alpha,isgauss=isgauss)
 	elif method_name == 'GC':
