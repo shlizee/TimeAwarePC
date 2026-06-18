@@ -26,14 +26,14 @@ matplotlib.use("agg")
 # -- Project information -----------------------------------------------------
 
 project = 'timeawarepc'
-copyright = '2022, Rahul Biswas'
+copyright = '2022-2026, Rahul Biswas'
 author = 'Rahul Biswas'
-
-# The full version, including alpha/beta/rc tags
-release = '2022'
 
 import timeawarepc
 import sphinx_rtd_theme
+
+# The full version, including alpha/beta/rc tags
+release = timeawarepc.__version__
 
 # -- General configuration ---------------------------------------------------
 
