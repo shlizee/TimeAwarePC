@@ -49,13 +49,6 @@ To use Granger Causality, also install `nitime` (`pip install nitime`).
 
 See the [Quick Start Guide](https://timeawarepc.readthedocs.io/en/latest/gettingstarted.html) for a quick tutorial of the main functionalities of this library and check if it is installed properly.
 
-## What's new in v2.0.0
-
-- `cfc_tpc` now defaults to **no bootstrap subsampling**: a single PC run is performed on the full time-delayed data.
-  - To use bootstrap stability scoring, pass `subsampsize` and `niter` together (e.g., `subsampsize=50, niter=25`).
-  - Both arguments must be specified together (or both left as the default `None`).
-- `partial_corr` now fits an intercept and is shift-invariant. Previously the regression was forced through the origin, biasing residuals when the data was not mean-centered.
-- See [CHANGELOG.md](CHANGELOG.md) for the full list of changes and migration notes.
 <!-- 
 ## Documentation
 
